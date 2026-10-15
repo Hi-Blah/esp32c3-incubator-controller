@@ -1,5 +1,12 @@
 name: Firmware compile
-on: [push, workflow_dispatch]
+on:
+  push:
+    paths:
+      - "firmware/**"
+      - "third_party/**"
+      - "tools/build_firmware.py"
+      - ".github/workflows/firmware.yml"
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -11,8 +18,8 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@v7
         with:
-          python-version: '3.13'
+          python-version: "3.13"
       - uses: arduino/setup-arduino-cli@v2
         with:
-          version: '1.x'
+          version: "1.x"
       - run: python tools/build_firmware.py --install --work /tmp/incubator-build

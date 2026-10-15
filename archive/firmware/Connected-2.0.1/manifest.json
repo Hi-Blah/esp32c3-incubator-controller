@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "version": "Connected-2.0.1",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorConnected-2.0.1.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "Arduino-ESP32 built-in BLE",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "U8g2_for_Adafruit_GFX 1.8.0"
+    ],
+    "companion": "MQTT broker / HA only",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+      "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "IncubatorConnected/IncubatorConnected.ino": "92598be2c0d3699754c53fdab934bb3d671bdcbcaaa68360f492747b760a12ef",
+    "IncubatorConnected/application.cpp": "fc66681408a3ae28dde7214d10f7b73bb1eef80b420bac01526d682faf52690f",
+    "IncubatorConnected/ble_service.cpp": "f1c2e0d0648b0fae3972d11254fd0627e77807af14c789def3131cb9f1fe4322",
+    "IncubatorConnected/bounded_dht.h": "e4ef5d1f862b19ee1ed522a46ec995381112328f0464e7161f24782e71202408",
+    "IncubatorConnected/control_service.h": "e0053904df379ee7c58b609ca4264331baa083719d9f5b67e8e4e47d9eddc802",
+    "IncubatorConnected/dht_decode.h": "79797f61f8760e2af1ba4126c6cd1554e7227c19549c94187bfe3d8f9b2e91fa",
+    "IncubatorConnected/dht_decode_tests.cpp": "3d4f852dbe8575be45423fa851327e4e3fe28721b8f561c7fbdc79d28391f035",
+    "IncubatorConnected/event_log.cpp": "0e0b622fb4650c841dfffce93ee43498f76c76000fee3f6e52ac9359edc1a300",
+    "IncubatorConnected/event_log.h": "63c6414e1cda475d6cfbb0b3fc8b371fb19b25c057df47470ece585d9ec06f8b",
+    "IncubatorConnected/format_decimal.h": "75f6329b208687d7a11bbed258b8b82fe76e8d452ad6814cd31cc987190aaab0",
+    "IncubatorConnected/format_decimal_tests.cpp": "a847a5b60d17afbea26e089c7f25033f54ad9d330cf8a22fe429d4e4a87021bd",
+    "IncubatorConnected/mqtt_service.cpp": "60b740c2b48cadca9e7c80fa50dd368778b4e17e88873575a2bdc16d58c23b9a",
+    "IncubatorConnected/mqtt_service.h": "1e3110d727d42863534cceca947109c28a53a78bd68766351830df0dff8ba607",
+    "IncubatorConnected/network_service.cpp": "fe9aa090b011e0a754b2ca8b69bb5a6cdbea879c4bf33bf61fa1dea3ab3aab63",
+    "IncubatorConnected/program_logic.h": "ee71bc812e27520d2fc0b16001b2d8cce55c38bf77c2d8694fa91923586a1b9b",
+    "IncubatorConnected/program_logic_tests.cpp": "fd98252edac6ea5926a801a249766d18535ff83e40e977e724bea8657f30fad8",
+    "IncubatorConnected/web_ui.h": "b77b044d65b0d0bcde3575923871a3e9c7ea46dd5435df72646b758a10f39586",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "c8162ff703cec9bcceca926287c44c9715245878b76e43a7d6b4a50afc129bf7",
+    "README.zh-CN.md": "289a61c502621772444ac5c430ee8424e5a69acf969f0c78a1b380e28c9602f4",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "version": "Advanced-1.1",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorAdvanced.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "Arduino-ESP32 built-in BLE",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "U8g2_for_Adafruit_GFX 1.8.0",
+      "DHT sensor library 1.4.7",
+      "Adafruit Unified Sensor 1.1.15"
+    ],
+    "companion": "none",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+      "DHT dht(21,DHT11);",
+      "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "IncubatorAdvanced/IncubatorAdvanced.ino": "92598be2c0d3699754c53fdab934bb3d671bdcbcaaa68360f492747b760a12ef",
+    "IncubatorAdvanced/application.cpp": "fa229288ced8e4f73cf57a66c1c80f4efe6b148f0e54bcb7a3c97bbb2fa68b75",
+    "IncubatorAdvanced/ble_service.cpp": "8e661c6369df4026ca369f3b2afabc2b42f0e0e602279498daffdc85e1426bb8",
+    "IncubatorAdvanced/control_service.h": "9c67c765beb53fbed7373cecf101eac5c59df55f2be0373f739dc10e469ce007",
+    "IncubatorAdvanced/network_service.cpp": "2441b1ce163124b1dab684e0b0adb5b032f23272e79343267bec46f590f55c9d",
+    "IncubatorAdvanced/program_logic.h": "dbe910261d0f85f60451c2fc584a2f035d24b5fa7ccd2ff37a0446b844f574c8",
+    "IncubatorAdvanced/program_logic_tests.cpp": "fd98252edac6ea5926a801a249766d18535ff83e40e977e724bea8657f30fad8",
+    "IncubatorAdvanced/web_ui.h": "182eefc6772cae3ade1eea06e7dc87e1792421efc8493b1ecab49b511c1d7f26",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "53611b7dace1c596e84954e2017c9982c5b607ccfd147155f41b7dd3651ba062",
+    "README.zh-CN.md": "ed26a8513cbf61202511f6e94a48a4195509ad7a05af4bdd5a3435677e9cdb8f",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

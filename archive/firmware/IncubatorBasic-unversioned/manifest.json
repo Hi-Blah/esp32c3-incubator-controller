@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "version": "IncubatorBasic-unversioned",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorBasic source directory"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "none",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "DHT sensor library 1.4.7",
+      "Adafruit Unified Sensor 1.1.15"
+    ],
+    "companion": "none",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4, 7};",
+      "constexpr uint8_t BUTTON_PIN[3] = {0, 1, 10};",
+      "constexpr uint8_t DHT_PIN = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+      "constexpr uint8_t SDA_PIN = 6;",
+      "constexpr uint8_t SCL_PIN = 5;",
+      "DHT dht(DHT_PIN, DHT11);",
+      "const bool wireReady = Wire.begin(SDA_PIN, SCL_PIN, 100000);"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "IncubatorBasic/IncubatorBasic.ino": "71bd030b7bac01a91da76e73b9afd1e8c35791ba26b7458d5a2f98a960fe8bda",
+    "IncubatorBasic/light_logic.h": "6f92205aa1971ee0ff8bd3b35dcb839d082178f18dbb05cd0d0dcf5af658d7d3",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "0997b0f62d14e95239b277a387bb876cef29531b5d6c2ac7896601572d76cf85",
+    "README.zh-CN.md": "5825cacef77285de9e7b27e912537d70f5b79ee11566f2705c1ad4b4ee0809a0",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

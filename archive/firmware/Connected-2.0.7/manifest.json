@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "version": "Connected-2.0.7",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorConnected-2.0.7.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "Arduino-ESP32 built-in BLE",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "U8g2_for_Adafruit_GFX 1.8.0"
+    ],
+    "companion": "NAS-Recorder-2.0.7",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+      "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "IncubatorConnected/IncubatorConnected.ino": "92598be2c0d3699754c53fdab934bb3d671bdcbcaaa68360f492747b760a12ef",
+    "IncubatorConnected/application.cpp": "1bcb7e7642a6ed727a74c5a0114454a14d64c718305cb40d4fd450715bf42f40",
+    "IncubatorConnected/ble_service.cpp": "9565f1780663b10cb151ada1736db0ea64dfdaff4846264e4ef499cccc644f34",
+    "IncubatorConnected/bounded_dht.h": "e4ef5d1f862b19ee1ed522a46ec995381112328f0464e7161f24782e71202408",
+    "IncubatorConnected/connected_regression_tests.cpp": "841ad2c07edddedf65c6bfd38d547c50df7955fff1a3f621486aa16844049624",
+    "IncubatorConnected/control_service.h": "04b0448573f7840fb9b91d9e232f08728549e05d75ca849335ac639ede8ccb31",
+    "IncubatorConnected/dht_decode.h": "79797f61f8760e2af1ba4126c6cd1554e7227c19549c94187bfe3d8f9b2e91fa",
+    "IncubatorConnected/dht_decode_tests.cpp": "3d4f852dbe8575be45423fa851327e4e3fe28721b8f561c7fbdc79d28391f035",
+    "IncubatorConnected/event_log.cpp": "9d6fe0e709d430a95a2d509125daf2e4b57a57bfffe5a28b2d28b921d7427793",
+    "IncubatorConnected/event_log.h": "59037cd3d4539de39e5b51f43951a52ca43806aa1f10d87bd54f74494324afd0",
+    "IncubatorConnected/format_decimal.h": "75f6329b208687d7a11bbed258b8b82fe76e8d452ad6814cd31cc987190aaab0",
+    "IncubatorConnected/format_decimal_tests.cpp": "a847a5b60d17afbea26e089c7f25033f54ad9d330cf8a22fe429d4e4a87021bd",
+    "IncubatorConnected/http_authority.h": "73cf84d72269ec3de5223cc5418aa1d86e614129d291393e6b5e49500e37a18d",
+    "IncubatorConnected/json_stream.h": "2c878a53095ce7b816391c7013d3b9f4011effbbce44eaec822e622fc9563423",
+    "IncubatorConnected/mqtt_publish_flow.h": "f217ea52c59f054f96359e09db433ac2547ca74b09717e35b85c608add4c3ae3",
+    "IncubatorConnected/mqtt_raw_tcp.cpp": "f95644df66aacf475bb4cf2871194ca87f8f0c2e727c9d7bbfb55ce6dcadf491",
+    "IncubatorConnected/mqtt_raw_tcp.h": "90de3a0d8a3b4fc894e5178811905fc034d70487f80f880e659eee7b1c11fb40",
+    "IncubatorConnected/mqtt_service.cpp": "c3469698e094fce8fd910263ca6ca3bb4549f83e6e12effdd77fe155044543ee",
+    "IncubatorConnected/mqtt_service.h": "fe94b3ed33c0a3cbfddff54e9254f64e9dfb24e2b53a9d189893787541846229",
+    "IncubatorConnected/network_service.cpp": "4ae24618fce89bb6efab494fd8fc598d969c612e7b10b94591cc5d3d58dc954c",
+    "IncubatorConnected/program_logic.h": "c608ed19515df2edb96e639b3719b3ed6d942dfb99eb0f00c2adef99c4446cf8",
+    "IncubatorConnected/program_logic_tests.cpp": "24442b65146c9226993d36e560a96c78d4b72955812ef336c9da1d08eb3c60a5",
+    "IncubatorConnected/pwm_result.h": "ba37df32562fc9f1ca8c48114f16532f5fb1f0d1d4196fc2aa4416633481cb78",
+    "IncubatorConnected/recovery_protocol.h": "230d4bafeace966848179b5585128a0b2f6445acd7e6a69df586f8a89e35983e",
+    "IncubatorConnected/recovery_protocol_tests.cpp": "e68243c9bf9821a7f85afa8b9aa65c7d22452e828ad7d338bd4886f1e8261b52",
+    "IncubatorConnected/web_state_json.h": "30e386556d0a738b5e72f02c7e59d76e47719e987729bca4a55a76f4b49c4050",
+    "IncubatorConnected/web_state_tests.cpp": "9b81613290595d9d831ea351ab7a3a15b2dabc04c127f51d642c3856ab746453",
+    "IncubatorConnected/web_ui.h": "1f87765e12f5636ba0b4b3b38dccc908e5e3ee1d7178aedadb44a94d732f6736",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "aba1c6925332f6e38a45841713155d0617d6db6739e126c19f3fd5dba812ac4d",
+    "README.zh-CN.md": "c078a31d71d3e6910e8adf062beb39f73266420eb83366bda8fda0c801c5d0fc",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

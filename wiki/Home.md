@@ -13,7 +13,7 @@
 | Optical calibration and mail | [Calibration](Calibration.md) | [校准通知](Calibration-zh-CN.md) |
 | Recovery and Flash history | [Recovery and history](Recovery-and-History.md) | [恢复与补传](Recovery-and-History-zh-CN.md) |
 | Acceptance and limitations | [Validation](Validation.md) | [验证与限制](Validation-zh-CN.md) |
-| Backups and GitHub publication | [Publishing](Publishing.md) | [备份与上传](Publishing-zh-CN.md) |
+| Backups and version selection | [Publishing](Publishing.md) | [备份与版本选择](Publishing-zh-CN.md) |
 
 The NAS performs analysis; local light schedules continue when NAS connectivity is lost. Historical measurements and recovery authorization are separate protocols.
 

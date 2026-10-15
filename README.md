@@ -4,7 +4,7 @@
 
 Two independently controlled light channels, sensor acquisition, Home Assistant integration and a NAS recorder for an experimental light incubator. The ESP32 runs the local schedule; the NAS stores history, evaluates optical feedback, fits PWM calibration data and sends notifications.
 
-**Current source: Connected-2.2.3 + NAS-Recorder-2.2.3, a candidate awaiting hardware acceptance.** It adds Flash-backed sensor history to the user-accepted Connected-2.2.2 / NAS-Recorder-2.2.2c baseline. See [validation and limitations](wiki/Validation.md) before calling this iteration stable. A project license has not yet been chosen; see [license status](LICENSE-STATUS.md).
+**Current source: Connected-2.2.3 + NAS-Recorder-2.2.3, a candidate awaiting hardware acceptance.** It adds Flash-backed sensor history to the Connected-2.2.2 / NAS-Recorder-2.2.2c prototype reference pair. See [validation and limitations](wiki/Validation.md) for the verification scope. A project license has not yet been chosen; see [license status](LICENSE-STATUS.md).
 
 ## What is included
 
@@ -43,7 +43,7 @@ Run the backend checks with Python 3.12+:
 python tools/test_backend.py
 ~~~
 
-The wiki is readable inside this repository. Publishing it to GitHub's Wiki requires a separate wiki repository; [first upload instructions](wiki/Publishing.md) explain this. Historical experiments are summarized in [version history](CHANGELOG.md); raw logs, credentials, flash dumps and unreviewed old archives are excluded.
+Historical versions are independently downloadable from the [version archive](archive/README.md). Each package includes its own installation, dependency, wiring and known-issue guide. See the [changelog](CHANGELOG.md) and [backups and version selection](wiki/Publishing.md).
 
 
 ## Architecture

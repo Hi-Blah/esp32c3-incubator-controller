@@ -22,3 +22,6 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 Thumbs.db
+
+# Catalogued source archives
+!archive/**/*.zip

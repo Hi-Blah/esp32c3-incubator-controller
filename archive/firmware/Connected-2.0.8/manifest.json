@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "version": "Connected-2.0.8",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorConnected-2.0.8.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "Arduino-ESP32 built-in BLE",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "U8g2_for_Adafruit_GFX 1.8.0"
+    ],
+    "companion": "NAS-Recorder-2.0.8",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+      "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+      "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+      "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+      "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+      "#define INC_PHOTO1_PIN 0",
+      "#define INC_PHOTO2_PIN 1",
+      "#define INC_PAGE_BUTTON_PIN 10"
+    ],
+    "optical_inputs": true
+  },
+  "files": {
+    "IncubatorConnected/IncubatorConnected.ino": "92598be2c0d3699754c53fdab934bb3d671bdcbcaaa68360f492747b760a12ef",
+    "IncubatorConnected/application.cpp": "d64c7efacef150a32cb9575e515b6e8ffeaa7e774db1e5e4f6ba8021b4f464e1",
+    "IncubatorConnected/ble_service.cpp": "72968e22547a71c033ba5809bcf03a0b560fb8b3d0bd8e0a59d388fa4b53c447",
+    "IncubatorConnected/bounded_dht.h": "e4ef5d1f862b19ee1ed522a46ec995381112328f0464e7161f24782e71202408",
+    "IncubatorConnected/connected_regression_tests.cpp": "841ad2c07edddedf65c6bfd38d547c50df7955fff1a3f621486aa16844049624",
+    "IncubatorConnected/control_service.h": "657587fd3e7a596f51533770f5d49256c70bd4264590869963d6b4243f4de2c6",
+    "IncubatorConnected/dht_decode.h": "79797f61f8760e2af1ba4126c6cd1554e7227c19549c94187bfe3d8f9b2e91fa",
+    "IncubatorConnected/dht_decode_tests.cpp": "3d4f852dbe8575be45423fa851327e4e3fe28721b8f561c7fbdc79d28391f035",
+    "IncubatorConnected/event_log.cpp": "9d6fe0e709d430a95a2d509125daf2e4b57a57bfffe5a28b2d28b921d7427793",
+    "IncubatorConnected/event_log.h": "59037cd3d4539de39e5b51f43951a52ca43806aa1f10d87bd54f74494324afd0",
+    "IncubatorConnected/format_decimal.h": "75f6329b208687d7a11bbed258b8b82fe76e8d452ad6814cd31cc987190aaab0",
+    "IncubatorConnected/format_decimal_tests.cpp": "a847a5b60d17afbea26e089c7f25033f54ad9d330cf8a22fe429d4e4a87021bd",
+    "IncubatorConnected/health_service.cpp": "5d7cfb01198d0214fff78b42283893480d51c6c49ad775243c7c47c9854c5aaa",
+    "IncubatorConnected/health_service.h": "b028f32f465836a327fafd49a253493f74dc30c0c93f951d714285bd5dd999ce",
+    "IncubatorConnected/http_authority.h": "73cf84d72269ec3de5223cc5418aa1d86e614129d291393e6b5e49500e37a18d",
+    "IncubatorConnected/json_stream.h": "2c878a53095ce7b816391c7013d3b9f4011effbbce44eaec822e622fc9563423",
+    "IncubatorConnected/light_feedback.cpp": "d603287a316865685bdebd34af1771ae3059ba932221c94d145cb1ae3a6440b5",
+    "IncubatorConnected/light_feedback.h": "f77642b6bbb8cf16a9f4074b1c0404aa7bcb392508f9911503353a3b8662d957",
+    "IncubatorConnected/manual_recovery.h": "bb7bf2c885dfbb3231025b54db33b4e8fca2e6ca8f04ea4ee290de9c7132dd57",
+    "IncubatorConnected/module_config.h": "6bc66cdc8f8db873d9d1bab1856a8d418254af86511dea251011556b62522821",
+    "IncubatorConnected/module_tests.cpp": "95a3366ace39ef0e16b12431761fa7a1386322b50fe8fcd699458afbe7e571bf",
+    "IncubatorConnected/mqtt_publish_flow.h": "f217ea52c59f054f96359e09db433ac2547ca74b09717e35b85c608add4c3ae3",
+    "IncubatorConnected/mqtt_raw_tcp.cpp": "f95644df66aacf475bb4cf2871194ca87f8f0c2e727c9d7bbfb55ce6dcadf491",
+    "IncubatorConnected/mqtt_raw_tcp.h": "90de3a0d8a3b4fc894e5178811905fc034d70487f80f880e659eee7b1c11fb40",
+    "IncubatorConnected/mqtt_service.cpp": "e36622861430e8d49f784a0b901abd68b5d2e1b2bc501aa8c446013604b5711e",
+    "IncubatorConnected/mqtt_service.h": "fe94b3ed33c0a3cbfddff54e9254f64e9dfb24e2b53a9d189893787541846229",
+    "IncubatorConnected/network_service.cpp": "5ce1cd337b12579c255cab0387c3bff93784c4193d5dd2138a9ff08ccfb89e4f",
+    "IncubatorConnected/program_logic.h": "c608ed19515df2edb96e639b3719b3ed6d942dfb99eb0f00c2adef99c4446cf8",
+    "IncubatorConnected/program_logic_tests.cpp": "24442b65146c9226993d36e560a96c78d4b72955812ef336c9da1d08eb3c60a5",
+    "IncubatorConnected/pwm_result.h": "ba37df32562fc9f1ca8c48114f16532f5fb1f0d1d4196fc2aa4416633481cb78",
+    "IncubatorConnected/recovery_protocol.h": "230d4bafeace966848179b5585128a0b2f6445acd7e6a69df586f8a89e35983e",
+    "IncubatorConnected/recovery_protocol_tests.cpp": "e68243c9bf9821a7f85afa8b9aa65c7d22452e828ad7d338bd4886f1e8261b52",
+    "IncubatorConnected/web_state_json.h": "b2508d073d024ba9fe2ca8283b9cb753823e1dd11412b4181c11f64553712d55",
+    "IncubatorConnected/web_state_tests.cpp": "9b81613290595d9d831ea351ab7a3a15b2dabc04c127f51d642c3856ab746453",
+    "IncubatorConnected/web_ui.h": "2f5061fa0b2aad9f054d64c422705c613fbc9f5eb26fb886fd139729d731ab40",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "aeb81ef5081fa0f4936b43c670d5608340bea7bd047cb37ece22b6d91df61df0",
+    "README.zh-CN.md": "815867f52cd8fc6d09d08cd4c33e394ed32ffe28350a4ebfdb54893981d2b32d",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

@@ -1,0 +1,841 @@
+{
+  "schema": 1,
+  "entries": [
+    {
+      "version": "Advanced-1",
+      "kind": "firmware",
+      "path": "firmware/Advanced-1/Advanced-1-Source.zip",
+      "sha256": "9e9e35d13cc91d33a18036674630e2dd69b8146b32ba0005f8053727b698ffb1",
+      "bytes": 36371,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0",
+          "DHT sensor library 1.4.7",
+          "Adafruit Unified Sensor 1.1.15"
+        ],
+        "companion": "none",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "DHT dht(21,DHT11);",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Advanced-1.1",
+      "kind": "firmware",
+      "path": "firmware/Advanced-1.1/Advanced-1.1-Source.zip",
+      "sha256": "4b7e0cb7ae34338ee238f987ade63990080db82e4bffeba0d7dd4bee24c326bc",
+      "bytes": 36852,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0",
+          "DHT sensor library 1.4.7",
+          "Adafruit Unified Sensor 1.1.15"
+        ],
+        "companion": "none",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "DHT dht(21,DHT11);",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0/Connected-2.0-Source.zip",
+      "sha256": "7ab3450d7d8b4f00b70f390a467acbeb9eab2feca69d150de7933255278466a2",
+      "bytes": 52075,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.1",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.1/Connected-2.0.1-Source.zip",
+      "sha256": "3d468e43259e7ae5e77816f2e0866d16d8e34f86914466ff3ed7a286ee816f28",
+      "bytes": 54579,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.2",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.2/Connected-2.0.2-Source.zip",
+      "sha256": "50e07e7fa0ac97b368d1c689b3d9a236c7c6f7e1a90fc9d26d20d12067e2dee8",
+      "bytes": 55698,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.3",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.3/Connected-2.0.3-Source.zip",
+      "sha256": "03a30488e9927f084c9b3075862257480bce7aed1c914f9ee560e8eb9016dfdf",
+      "bytes": 59767,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.4",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.4/Connected-2.0.4-Source.zip",
+      "sha256": "44682943d56b241c9b61078b95bb283744154e06cfa5a2d776e126e088995628",
+      "bytes": 64455,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.5",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.5/Connected-2.0.5-Source.zip",
+      "sha256": "91b08a797c659ac632e5fa515bdd7e1348d756c5a711a694d4a696b76d0b80bd",
+      "bytes": 66025,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.6",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.6/Connected-2.0.6-Source.zip",
+      "sha256": "a019f03838f2ff8ac79da948f257269e402c341817156d9824a1f49b3faf3e81",
+      "bytes": 67214,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "MQTT broker / HA only",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.7",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.7/Connected-2.0.7-Source.zip",
+      "sha256": "7ce9fafcf3cf5866a2d578b2c367a0ec7ab65a1cfe2a2b71b89ca3beb6f44ce1",
+      "bytes": 72690,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.0.7",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.0.8",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.8/Connected-2.0.8-Source.zip",
+      "sha256": "7f8d472d18adcadecc345b43d654894fbed49b9c5762a3f1233539791f949541",
+      "bytes": 83601,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.0.8",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.0.9",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.9/Connected-2.0.9-Source.zip",
+      "sha256": "dbb52802da53645336f89c58ad93faab9e6648c75c5d6a002cf2448a6e8d54ac",
+      "bytes": 89619,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.0.8",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.0.10",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.0.10/Connected-2.0.10-Source.zip",
+      "sha256": "57c38ece6efcaf46645fdbe8f84de6d81c4f2e540fe9b5f58be4144fa5be3709",
+      "bytes": 90962,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.0.8",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.1.0",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.1.0/Connected-2.1.0-Source.zip",
+      "sha256": "279268479a8d352993fcc5eaa29cab2732e4114e26af84254a7e601613c8c278",
+      "bytes": 102662,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.1.0",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.1.1",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.1.1/Connected-2.1.1-Source.zip",
+      "sha256": "ab8b7cd7cdb34305a4b70b24326ed101087668d082985988aa0f9c114bf548f8",
+      "bytes": 106500,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.1.0",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.1.2",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.1.2/Connected-2.1.2-Source.zip",
+      "sha256": "3de070b272e6a3d8f8249ab6bd6e06777c069ef9a7bf0513ad4dec6439b53f72",
+      "bytes": 139203,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.1.0",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.1.2-WiFiDiag",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.1.2-WiFiDiag/Connected-2.1.2-WiFiDiag-Source.zip",
+      "sha256": "fb1bcd720260fc6021a584567297277e2a9541590eb29a3f921a70a1f037d9bf",
+      "bytes": 139252,
+      "status": "historical-source",
+      "details": {
+        "ble": "Arduino-ESP32 built-in BLE",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.1.0",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.2.0",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.2.0/Connected-2.2.0-Source.zip",
+      "sha256": "ebed71504901fc1e77b43a246d3b3907af621f88912bc1b21d220dbd5214ed13",
+      "bytes": 137379,
+      "status": "historical-source",
+      "details": {
+        "ble": "NimBLE-Arduino 2.5.1",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.2.2c",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "namespace {portMUX_TYPE mux=portMUX_INITIALIZER_UNLOCKED;PhotoView view={};uint64_t lastSample=0,lastAnalysis[2]={};constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.2.1",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.2.1/Connected-2.2.1-Source.zip",
+      "sha256": "5e64555082a0dc34cb2988c4d126a24220cfcd01dba4fda13797198da12fa467",
+      "bytes": 137422,
+      "status": "historical-source",
+      "details": {
+        "ble": "NimBLE-Arduino 2.5.1",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.2.2c",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "namespace {portMUX_TYPE mux=portMUX_INITIALIZER_UNLOCKED;PhotoView view={};uint64_t lastSample=0,lastAnalysis[2]={};constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "Connected-2.2.2",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.2.2/Connected-2.2.2-Source.zip",
+      "sha256": "8ae8c6faa6aabca86c4118465e38038a4d6fe6d7cd6a7e8e7d855e94a978a11a",
+      "bytes": 147726,
+      "status": "reference-prototype",
+      "details": {
+        "ble": "IncubatorNimBLE 2.5.1",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.2.2c",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4,7};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={0,1,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(6,5,400000);Wire.setTimeOut(30);",
+          "namespace {portMUX_TYPE mux=portMUX_INITIALIZER_UNLOCKED;PhotoView view={};uint64_t lastSample=0,lastAnalysis[2]={};constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "WiFi-unversioned",
+      "kind": "firmware",
+      "path": "firmware/WiFi-unversioned/WiFi-unversioned-Source.zip",
+      "sha256": "39d570507a8b660e14353afe2178502eaca931f3fc375a5fec49c8762d2f6b84",
+      "bytes": 29171,
+      "status": "historical-source",
+      "details": {
+        "ble": "none",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "DHT sensor library 1.4.7",
+          "Adafruit Unified Sensor 1.1.15"
+        ],
+        "companion": "none",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4, 7};",
+          "constexpr uint8_t BUTTON_PIN[3] = {0, 1, 10};",
+          "constexpr uint8_t DHT_PIN = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+          "constexpr uint8_t SDA_PIN = 6;",
+          "constexpr uint8_t SCL_PIN = 5;",
+          "DHT dht(DHT_PIN, DHT11);",
+          "const bool wireReady = Wire.begin(SDA_PIN, SCL_PIN, 100000);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "HardwareCheck-unversioned",
+      "kind": "firmware",
+      "path": "firmware/HardwareCheck-unversioned/HardwareCheck-unversioned-Source.zip",
+      "sha256": "7f508a2f57a4279d6232825dbbdbe5df9a28e1580347790973bb0978bc02433c",
+      "bytes": 9711,
+      "status": "historical-source",
+      "details": {
+        "ble": "none",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "DHT sensor library 1.4.7",
+          "Adafruit Unified Sensor 1.1.15"
+        ],
+        "companion": "none",
+        "pin_definitions": [
+          "constexpr int PIN_SDA = 6;",
+          "constexpr int PIN_SCL = 5;",
+          "constexpr int PIN_DHT = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+          "constexpr int PIN_LIGHT1 = 4;",
+          "constexpr int PIN_LIGHT2 = 7;",
+          "DHT dht(PIN_DHT, DHT11);",
+          "if (Wire.begin(PIN_SDA, PIN_SCL, 100000)) {"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "IncubatorBasic-unversioned",
+      "kind": "firmware",
+      "path": "firmware/IncubatorBasic-unversioned/IncubatorBasic-unversioned-Source.zip",
+      "sha256": "75d81fb133a2d0820e1744d359287ef0b14fa05828edfd35449d5a9e60a531c7",
+      "bytes": 15309,
+      "status": "historical-source",
+      "details": {
+        "ble": "none",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "DHT sensor library 1.4.7",
+          "Adafruit Unified Sensor 1.1.15"
+        ],
+        "companion": "none",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4, 7};",
+          "constexpr uint8_t BUTTON_PIN[3] = {0, 1, 10};",
+          "constexpr uint8_t DHT_PIN = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+          "constexpr uint8_t SDA_PIN = 6;",
+          "constexpr uint8_t SCL_PIN = 5;",
+          "DHT dht(DHT_PIN, DHT11);",
+          "const bool wireReady = Wire.begin(SDA_PIN, SCL_PIN, 100000);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "IncubatorWiFiNtpRetry-unversioned",
+      "kind": "firmware",
+      "path": "firmware/IncubatorWiFiNtpRetry-unversioned/IncubatorWiFiNtpRetry-unversioned-Source.zip",
+      "sha256": "362dab91ed2d82a3cb0d2b24a93a3bc3d76931a86e152f65dd9a01dc790c9ae3",
+      "bytes": 30254,
+      "status": "historical-source",
+      "details": {
+        "ble": "none",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "DHT sensor library 1.4.7",
+          "Adafruit Unified Sensor 1.1.15"
+        ],
+        "companion": "none",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {4, 7};",
+          "constexpr uint8_t BUTTON_PIN[3] = {0, 1, 10};",
+          "constexpr uint8_t DHT_PIN = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+          "constexpr uint8_t SDA_PIN = 6;",
+          "constexpr uint8_t SCL_PIN = 5;",
+          "DHT dht(DHT_PIN, DHT11);",
+          "const bool wireReady = Wire.begin(SDA_PIN, SCL_PIN, 100000);"
+        ],
+        "optical_inputs": false
+      }
+    },
+    {
+      "version": "Connected-2.2.3",
+      "kind": "firmware",
+      "path": "firmware/Connected-2.2.3/Connected-2.2.3-Source.zip",
+      "sha256": "7ec83bced901ca3a28dba97edeab3250d4708b3c1b758f5b8662e3cd39ca1397",
+      "bytes": 158317,
+      "status": "candidate",
+      "details": {
+        "ble": "IncubatorNimBLE 2.5.1",
+        "libraries": [
+          "Adafruit SSD1306 2.5.17",
+          "Adafruit GFX 1.12.6",
+          "Adafruit BusIO 1.17.4",
+          "U8g2_for_Adafruit_GFX 1.8.0"
+        ],
+        "companion": "NAS-Recorder-2.2.3",
+        "pin_definitions": [
+          "constexpr uint8_t LIGHT_PIN[2] = {INC_LIGHT1_PIN,INC_LIGHT2_PIN};",
+          "constexpr uint8_t BUTTON_PIN[1]={INC_PAGE_BUTTON_PIN};",
+          "constexpr uint8_t BUTTON_PIN[3]={INC_LIGHT1_BUTTON_PIN,INC_LIGHT2_BUTTON_PIN,INC_PAGE_BUTTON_PIN};",
+          "Wire.begin(INC_I2C_SDA_PIN,INC_I2C_SCL_PIN,400000);Wire.setTimeOut(30);",
+          "#define INC_I2C_SDA_PIN 6",
+          "#define INC_I2C_SCL_PIN 5",
+          "#define INC_DHT_PIN 21",
+          "#define INC_LIGHT1_PIN 4",
+          "#define INC_LIGHT2_PIN 7",
+          "#define INC_PHOTO1_PIN 0",
+          "#define INC_PHOTO2_PIN 1",
+          "#define INC_PAGE_BUTTON_PIN 10",
+          "#define INC_LIGHT1_BUTTON_PIN 0",
+          "#define INC_LIGHT2_BUTTON_PIN 1",
+          "constexpr int pins[]={INC_LIGHT1_PIN,INC_LIGHT2_PIN,",
+          "static constexpr gpio_num_t pin=static_cast<gpio_num_t>(INC_DHT_PIN);",
+          "namespace {portMUX_TYPE mux=portMUX_INITIALIZER_UNLOCKED;PhotoView view={};uint64_t lastSample=0,lastAnalysis[2]={};constexpr uint8_t pins[2]={INC_PHOTO1_PIN,INC_PHOTO2_PIN};"
+        ],
+        "optical_inputs": true
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.0.7",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.0.7/NAS-Recorder-2.0.7-Source.zip",
+      "sha256": "2dd85d244769cdcb8f5e63d8f8b9b1da20ee2b24dfe1a57f8ae08e8f7af88d68",
+      "bytes": 87318,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Superseded historical runtime; assess compatibility before use.",
+        "note_zh": "历史版本，使用前需核对兼容性。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.0.8",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.0.8/NAS-Recorder-2.0.8-Source.zip",
+      "sha256": "5eb45b9374465b145f3fdbeb0ee15464b3ce54aa149ede20b14dab001b456fbb",
+      "bytes": 87317,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Superseded historical runtime; assess compatibility before use.",
+        "note_zh": "历史版本，使用前需核对兼容性。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.1.0-local",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.1.0-local/NAS-Recorder-2.1.0-local-Source.zip",
+      "sha256": "81a358f68468a40d485952e5f8141b1a0fa9abe376b2dc7c194d9bf1c2b16fbf",
+      "bytes": 88765,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Superseded historical runtime; assess compatibility before use.",
+        "note_zh": "历史版本，使用前需核对兼容性。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.1.0",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.1.0/NAS-Recorder-2.1.0-Source.zip",
+      "sha256": "1fdb9403bde3fcffc997084d9aff5056eda7d724dbb0305e833ebc60e8640284",
+      "bytes": 98141,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Optical records and notifications; predates the full device portal.",
+        "note_zh": "支持光照记录和通知，早于完整设备控制页。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.2.0",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.2.0/NAS-Recorder-2.2.0-Source.zip",
+      "sha256": "1dab7094d19a292972ffe3b7e1e7d676f2aabff53ac51ad5dc0782a16c38e2c0",
+      "bytes": 119113,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "NAS optical analysis and model dashboard; not the later complete device portal.",
+        "note_zh": "提供 NAS 光照分析和模型仪表盘，尚不是后来的完整设备控制页。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.2.2",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.2.2/NAS-Recorder-2.2.2-Source.zip",
+      "sha256": "161e5cf2e4971b480298f563b9e9fd689bdb2afb71e0d9f79d8e079953103ead",
+      "bytes": 146244,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Initial full device portal; configuration-topic parsing/ACL errors require the a/c fixes.",
+        "note_zh": "首次提供完整设备控制页，配置主题解析和权限问题需采用 a/c 修复。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.2.2a",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.2.2a/NAS-Recorder-2.2.2a-Source.zip",
+      "sha256": "ee10841d532294578c1deed7d8d26c7a45d6cce6957f9bf750913c77f9f6817e",
+      "bytes": 146605,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Includes configuration-topic/ACL gateway fixes.",
+        "note_zh": "包含配置主题、ACL 和控制网关修复。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.2.2b",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.2.2b/NAS-Recorder-2.2.2b-Source.zip",
+      "sha256": "27d52c80f648f6f6f9426f8a72f72d33487a324b4b7731cffa97f28975b96a8e",
+      "bytes": 150735,
+      "status": "historical-source",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Includes manual-ON optical alarms and notification UI fixes; SMTP delivery issue remained.",
+        "note_zh": "包含手动开灯无光报警和通知界面修复，SMTP 投递问题尚未修复。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.2.2c",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.2.2c/NAS-Recorder-2.2.2c-Source.zip",
+      "sha256": "61d6e518c2a3cd9634140a24e46bf55d781278a64c13a9eb3c3f21f5918c0110",
+      "bytes": 158016,
+      "status": "reference-prototype",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Cumulative a/b/c code, including SMTP envelope/body submission fixes.",
+        "note_zh": "累计包含 a/b/c 修复，包括 SMTP 信封与正文投递。"
+      }
+    },
+    {
+      "version": "NAS-Recorder-2.2.3",
+      "kind": "nas",
+      "path": "nas/NAS-Recorder-2.2.3/NAS-Recorder-2.2.3-Source.zip",
+      "sha256": "cb8ea7ac6ad4ac3a9f5dd9c324498525dd962982c19085266dbf694aa4184631",
+      "bytes": 159403,
+      "status": "candidate",
+      "details": {
+        "cumulative": true,
+        "python": "3.13",
+        "paho": "2.1.0",
+        "note": "Adds durable sample receipts, historical backfill and >180-second disconnect notices.",
+        "note_zh": "新增采样入库回执、历史补传和超过 180 秒断联提示。"
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "dependencies/IncubatorNimBLE-2.5.1.zip",
+      "sha256": "9250d6e2367ace4891f43198199b2f77d6900edde5a82ca9b3d8e5062642946a"
+    }
+  ]
+}

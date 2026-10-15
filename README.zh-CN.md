@@ -4,7 +4,7 @@
 
 用于实验培养箱的双路独立光照控制、传感器采集、Home Assistant 接入及 NAS 长期记录。开发板执行本地定时和采集；NAS 负责历史存储、光反馈判定、PWM 标定模型及邮件通知。
 
-**当前源码为 Connected-2.2.3 + NAS-Recorder-2.2.3，属于待实机验收的候选版。** 在已由使用者选定的 Connected-2.2.2 / NAS-Recorder-2.2.2c 稳定基线上，新增传感器 Flash 历史缓存。完成[验证清单](wiki/Validation-zh-CN.md)后，再将本次迭代标为稳定版。项目许可证暂未选择，见[许可证状态](LICENSE-STATUS.md)。
+**当前源码为 Connected-2.2.3 + NAS-Recorder-2.2.3，属于待实机验收的候选版。** 在 Connected-2.2.2 / NAS-Recorder-2.2.2c 原型参考版本基础上，新增传感器 Flash 历史缓存。实机验证范围见[验证清单](wiki/Validation-zh-CN.md)。项目许可证暂未选择，见[许可证状态](LICENSE-STATUS.md)。
 
 ## 已实现功能
 
@@ -40,7 +40,7 @@
 python tools/test_backend.py
 ~~~
 
-首次上传只放本次整理的源码和已审核文档。旧版本保留在[版本记录](CHANGELOG.md)中，不批量公开私人日志、备份、原始固件包。GitHub Wiki 需要单独发布，见[首次上传指南](wiki/Publishing-zh-CN.md)。
+历史版本可从[版本下载目录](archive/README.zh-CN.md)独立获取，每包包含该版本的安装、依赖、接线及已知问题说明。参见[版本记录](CHANGELOG.md)和[备份与版本选择](wiki/Publishing-zh-CN.md)。
 
 
 ## 系统结构

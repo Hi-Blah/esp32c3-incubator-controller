@@ -13,5 +13,5 @@ Project license selection does not replace these third-party licenses.
 
 NimBLE modifications: renamed library metadata and wrapper header; central/observer roles disabled and one peripheral connection selected in src/nimconfig.h. Original copyright statements are retained. Python paho files are included unmodified; project code explicitly selects the vendored 2.1.0 runtime.
 
-第三方作者、版权和许可证文字属于必要署名，不作为需要删去的私人信息。
+第三方版权和许可证声明随对应依赖保留。
 

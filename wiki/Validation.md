@@ -1,8 +1,8 @@
 # Acceptance, limits and troubleshooting
 
-The selected stable baseline is Connected-2.2.2 plus cumulative NAS-Recorder-2.2.2c. The owner observed normal HA data/control, NAS records/CSV, NAS-assisted restart recovery and a delivered optical-fault email. This is a prototype acceptance report, not an endurance or safety certification.
+The prototype reference pair is Connected-2.2.2 plus cumulative NAS-Recorder-2.2.2c. Reference checks covered HA data/control, NAS records/CSV, NAS-assisted restart recovery and delivered optical-fault mail. This is a prototype acceptance report, not an endurance or safety certification.
 
-Connected-2.2.3 adds the journal and public build layout. Automated checks are recorded separately in docs/verification.md. Hardware acceptance is pending until these checks are performed on the actual intended wiring/load:
+Connected-2.2.3 adds the journal and reproducible build layout. Automated checks are recorded separately in docs/verification.md. Hardware acceptance is pending until these checks are performed on the actual intended wiring/load:
 
 1. Start with USB only, both channels locked. Verify version, config retention, logic/NVS, Flash filesystem size, samples info and no resets.
 2. Verify each sensor's validity and changing raw values. Test one output and PWM, then two outputs under the intended fused load. Check measured current and temperature over the planned operating duration.

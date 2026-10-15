@@ -1,6 +1,7 @@
 """Public-tree hygiene and asset checks. Does not inspect or print secret contents."""
 from pathlib import Path
 import gzip,re,sys,xml.etree.ElementTree as ET
+from audit_archives import audit as audit_archives
 ROOT=Path(__file__).resolve().parents[1]
 SKIP={'.git','runtime','build','dist','__pycache__','.pytest_cache'}
 def files():
@@ -8,10 +9,10 @@ def files():
   if p.is_file() and not any(part in SKIP for part in p.relative_to(ROOT).parts):yield p
 
 def main():
- errors=[]
+ errors=audit_archives(ROOT)
  for p in files():
   relative=p.relative_to(ROOT).as_posix()
-  if p.suffix.lower() in {'.bin','.elf','.map','.db','.sqlite3','.zip','.log'} or p.name in {'.env','smtp.json'} or p.name.endswith('_password.txt'):errors.append(relative+': private/build artifact')
+  if (p.suffix.lower() in {'.bin','.elf','.map','.db','.sqlite3','.log'} or (p.suffix.lower()=='.zip' and not relative.startswith('archive/'))) or p.name in {'.env','smtp.json'} or p.name.endswith('_password.txt'):errors.append(relative+': private/build artifact')
   if p.suffix=='.svg':ET.parse(p)
   if relative.startswith(('third_party/','services/recorder/vendor/')):continue
   if p.suffix.lower() not in {'.py','.cpp','.h','.ino','.html','.md','.json','.yaml','.ps1','.txt'}:continue

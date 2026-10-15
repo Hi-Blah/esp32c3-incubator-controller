@@ -1,26 +1,19 @@
-# Private backups and first GitHub publication
+# Backups, cloning and version selection
 
-### Backup and replacement
+## Select a version
 
-The PowerShell tools under tools/backup read the actual partition table, read NVS twice and compare hashes. NVS includes credentials, identities, bonds and saved program state. Keep every dump private. --FullFlash on the save tool also preserves firmware/filesystem; a NVS-only backup does not contain the new sensor journal.
+Use the [version catalog](../archive/README.md) to choose a release. Connected-2.2.2 with NAS-Recorder-2.2.2c is the prototype reference pair; 2.2.3 adds the Flash sample journal and remains a candidate pending hardware acceptance. Older versions are for reproducing a specific behavior or studying the implementation. Read the README inside the selected ZIP rather than applying the current wiring or deployment guide to it.
 
-Disconnect 24 V and external GPIO wiring, lock outputs, stop MQTT and close serial monitoring before BOOT download mode. Select the correct physical board and current COM port. Use Save-IncubatorConfig.ps1 with -Port and optional -ToolPath; each script has Get-Help/parameter documentation. Restore requires a compatible 4 MB ESP32-C3 firmware/partition table and verifies bytes read back. First boot after restore remains a USB-only check because saved recovery permissions can restore outputs. Do not restore a whole Flash image indiscriminately onto another board variant.
+Firmware and recorder versions are separate. A firmware rollback does not require a production recorder rollback. Test old recorders against an independent data directory; never let an old schema writer open a newer production database. Compare the package manifest SHA256 with archive/catalog.json after download.
 
-For an intentional one-for-one replacement, keep the old board offline and preserve the logical ID/ACL/history. For a new independent switch, after restore send disarm, mqtt off, device id new and restart; allocate a new NAS device ID/ACL before enabling MQTT. Hardware MAC is not rewritten by an NVS restore.
+## Save and restore a board
 
-### First repository upload
+The PowerShell tools under tools/backup discover the actual partition table, read NVS twice and compare hashes. NVS holds Wi-Fi/MQTT credentials, logical identity, BLE bonds and saved programs. Store dumps securely. The save tool option -FullFlash also preserves the application and filesystem; an NVS-only backup does not contain sensor journal files.
 
-Start with a clean repository containing this reviewed source tree. Do not upload the private development directory wholesale. Keep .env, runtime, records, password files, raw logs, NVS/full-Flash dumps, screenshots and old build archives out of Git. A .gitignore does not remove a secret that was already committed; rotate any exposed credential and remove it from history before publishing.
+Disconnect the 24 V load and external GPIO, lock the outputs, turn MQTT off and close the serial monitor before entering BOOT download mode. Check the physical board and actual COM port. Save-IncubatorConfig.ps1 accepts -Port and optional -ToolPath; Get-Help lists its parameters. Restore only to a compatible 4 MB ESP32-C3 and partition layout, then verify the read-back. First boot uses USB power alone because saved recovery settings can enable outputs automatically.
 
-A suitable repository name is esp32c3-incubator-controller. Keep it private while reviewing the candidate and selecting the project license. The repository title can be ESP32-C3 Incubator Light Controller & Data Logger. After acceptance, create a tag/release for the new version. GitHub automatically creates source archives; attach verified binaries only after checking embedded defaults and build paths.
+For a one-to-one replacement, keep the replaced board offline and preserve the logical ID, ACL and history association. For a separate controller, use firmware that supports device identity changes: disarm, mqtt off, device id new, then restart. Allocate a new NAS device and ACL before enabling MQTT. Earlier versions without this command derive identity from hardware. Restoring NVS does not rewrite the hardware MAC.
 
-Do not fabricate commits for old prototypes. Preserve meaningful version information in CHANGELOG.md; audit old source separately before adding a historical tag/archive. Broken private trial packages and chat logs are not useful release assets.
+## GitHub Wiki maintenance
 
-Create the empty repository on GitHub, then follow its existing-folder instructions from this exact directory, inspect git status and git diff --cached before the first commit/push. Never run git add . from a parent directory containing other projects. GitHub credentials must be entered through its own trusted sign-in flow, not pasted into chat or saved in scripts.
-
-### Publishing the bilingual Wiki
-
-The wiki/ directory is readable as ordinary repository documentation. GitHub Wiki uses a separate REPOSITORY.wiki.git repository and is not created by pushing a folder named wiki. First enable/create Home in GitHub's Wiki UI, clone that wiki repository, then use tools/export_wiki.py to copy and rewrite local links for that target. Review the wiki diff and commit/push both language sets. No tool here pushes automatically.
-
-GitHub plan/visibility affects Wiki availability: see [About wikis](https://docs.github.com/en/communities/documenting-your-project-with-wikis/about-wikis) and [editing wiki pages locally](https://docs.github.com/en/communities/documenting-your-project-with-wikis/adding-or-editing-wiki-pages). If private Wiki is unavailable, the bilingual wiki files remain usable in the main repository. License choice guidance: [GitHub licensing](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
-
+The bilingual wiki/ directory is directly readable in the main repository. The GitHub Wiki feature uses a separate repository ending in .wiki.git. After initializing Home through the Wiki page, clone that repository and use tools/export_wiki.py to copy the pages and adapt links, then review and push the changes. The exporter never pushes automatically. Wiki availability depends on repository visibility and plan: [GitHub Wiki documentation](https://docs.github.com/en/communities/documenting-your-project-with-wikis/about-wikis).

@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "version": "HardwareCheck-unversioned",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "HardwareCheck source directory"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "none",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "DHT sensor library 1.4.7",
+      "Adafruit Unified Sensor 1.1.15"
+    ],
+    "companion": "none",
+    "pin_definitions": [
+      "constexpr int PIN_SDA = 6;",
+      "constexpr int PIN_SCL = 5;",
+      "constexpr int PIN_DHT = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+      "constexpr int PIN_LIGHT1 = 4;",
+      "constexpr int PIN_LIGHT2 = 7;",
+      "DHT dht(PIN_DHT, DHT11);",
+      "if (Wire.begin(PIN_SDA, PIN_SCL, 100000)) {"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "HardwareCheck/HardwareCheck.ino": "d9ea4406dd14514203a1fedcb79bb35619590150a7ef6dae0254e21375e1d3f0",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "dbfac2f025dac2292ff4d472a560979f8c8c5fca19817bb6137206d34aa87220",
+    "README.zh-CN.md": "603a0a66b468f0922f9190b89b90c109bda97d4040ea1cf1597f65bce1c8d258",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

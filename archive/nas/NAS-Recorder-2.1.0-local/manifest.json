@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "version": "NAS-Recorder-2.1.0-local",
+  "kind": "nas",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "NAS-Recorder-Local-Python-2.1.0.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "cumulative": true,
+    "python": "3.13",
+    "paho": "2.1.0",
+    "note": "Superseded historical runtime; assess compatibility before use.",
+    "note_zh": "历史版本，使用前需核对兼容性。"
+  },
+  "files": {
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "12ad35445cdf75a16025ef7c6539cdfdd3ed100a58ac32e0146c91689b115326",
+    "README.zh-CN.md": "0a60c14b6d931fddf74c45a31cdad703da93573258444bb90fb9667133354ec5",
+    "mqtt/config/acl.archive.example": "4dfbd7853fbe27a63a4e89e7fb27c7b2a7330b8ed439f97ad01696cc10c9ffe7",
+    "recorder/.env.example": "f5f547b4f8cffeb618dd7df4b636ea6ed55aa4c841877166904ed2a4722ae838",
+    "recorder/check_runtime.py": "0fa9c73e809748628a773e6f34a147f19f645c6dfba63b7ab07ed1cb30e38fe9",
+    "recorder/compose.archive.yaml": "669aa9c979491891911dcf7ff5a06dd591c831459de5aad59ddf5de070c4f6f5",
+    "recorder/compose.local.yaml": "55e5ff1d4b7967b2e138e5f783fbd49a5010dfe218131626af0f14cb6ea0f64b",
+    "recorder/export.py": "a9271443febb70e0ab596b8e5decc042619e9622cebf734605e34d5b38fa1ef1",
+    "recorder/record_store.py": "74622495f3afe875022be160a45d58409a8872e1b771f3f5d7be507c45bda910",
+    "recorder/recorder.py": "6da3442ad82b5665cd5c54317407c4143c6dd41084f57bc02abd15b3bc47711d",
+    "recorder/test_paho_runtime.py": "350cd6595b52838ec7ce37d162424dce93aeb9b45131f3fb42fec5ecd0d4d33e",
+    "recorder/test_record_store.py": "9cdb237879697c95773ac6d298f157bb8cf33a2a3d1cf9184c32486682e73af4",
+    "recorder/test_transport.py": "b87a7f1ab6073293e2d015e886548e6178972e5343cbf2c34c4a4d57131192db",
+    "recorder/vendor/paho/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "recorder/vendor/paho/mqtt/__init__.py": "0f48cf02d6996aed1d786b38f83052363ff0bc19821912ed23e014b5f0312735",
+    "recorder/vendor/paho/mqtt/client.py": "5a3f0f73b344541828586a90f79a6beecb8e4396d8b81064bc2920c1a853618a",
+    "recorder/vendor/paho/mqtt/enums.py": "e2218cb0eb555171cafdc39f0c9c677010dbab57a5b866e6dc76a22358cfabc2",
+    "recorder/vendor/paho/mqtt/matcher.py": "5486c5010a1a2ab3c0ad07ffa8d4ff04cd453092b15b7f0e936ed1df0d86f81d",
+    "recorder/vendor/paho/mqtt/packettypes.py": "08d48d0f21c6b0f1a10ab93d081527a4d5f10349c49f311a560e0aadbe91a0e4",
+    "recorder/vendor/paho/mqtt/properties.py": "244b8abc726d9621ef37ba72fa230b59d4348ecc698966da20e9027ef53a8724",
+    "recorder/vendor/paho/mqtt/publish.py": "e2298656185baea1d454d99f8b0810d413cf8f71d65af5dc8f1e434088ff3a28",
+    "recorder/vendor/paho/mqtt/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "recorder/vendor/paho/mqtt/reasoncodes.py": "c75d8a2bafa448ed3e28535a9e8183b8dcc71c9c7ace9366e8f006cabcee4979",
+    "recorder/vendor/paho/mqtt/subscribe.py": "2809204dec14bb9a1fe2c77b86c02b881d25ebf80c40b218c5f26b3af420e9db",
+    "recorder/vendor/paho/mqtt/subscribeoptions.py": "6d6195286dea75cf483e5aa96d149b2fce1cd202b605b8bb320a7a9391b719d3",
+    "recorder/vendor/paho_mqtt-2.1.0.dist-info/METADATA": "adc7c23ff41ac76ac558964022dd7502ca9a70c32403859e2c2283e077bfa230",
+    "recorder/vendor/paho_mqtt-2.1.0.dist-info/RECORD": "f6d313f5d09b601880756182ba4e9e2b8707a52c6cac7ef15dedad4daca7ce70",
+    "recorder/vendor/paho_mqtt-2.1.0.dist-info/WHEEL": "cc431c46bf4aaf4df1d68cc6c20e6ff4d4012a7de49dda7a2d2a1295583e8e15",
+    "recorder/vendor/paho_mqtt-2.1.0.dist-info/licenses/LICENSE.txt": "66408b049249c3bdb0ba1ed285f5422ce67e371d40151bebd4d806af454ffe7c"
+  }
+}

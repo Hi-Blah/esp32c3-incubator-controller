@@ -1,6 +1,6 @@
 # 针脚、模块与配置定制
 
-公开版将接线集中在 firmware/IncubatorController/board_config.h。默认接线保持原方案；自定义接线需要重新实测，不能直接沿用默认硬件的验收结论。
+2.2.3 起将接线集中在 firmware/IncubatorController/board_config.h。默认接线保持原方案；自定义接线需要重新实测，不能直接沿用默认硬件的验收结论。
 
 | 想修改的内容 | 修改位置 | 实际使用处 |
 |---|---|---|

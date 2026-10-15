@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "version": "WiFi-unversioned",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorWiFi.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "none",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "DHT sensor library 1.4.7",
+      "Adafruit Unified Sensor 1.1.15"
+    ],
+    "companion": "none",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4, 7};",
+      "constexpr uint8_t BUTTON_PIN[3] = {0, 1, 10};",
+      "constexpr uint8_t DHT_PIN = 21; // UART0 TX reused; use USB CDC Serial, not Serial0.",
+      "constexpr uint8_t SDA_PIN = 6;",
+      "constexpr uint8_t SCL_PIN = 5;",
+      "DHT dht(DHT_PIN, DHT11);",
+      "const bool wireReady = Wire.begin(SDA_PIN, SCL_PIN, 100000);"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "IncubatorWiFi/IncubatorWiFi.ino": "699351a10069aa31d7e3bf887264da685a305f0a022fa8b80fdd4068e273dd67",
+    "IncubatorWiFi/light_logic.h": "6f92205aa1971ee0ff8bd3b35dcb839d082178f18dbb05cd0d0dcf5af658d7d3",
+    "IncubatorWiFi/network_service.cpp": "2d7680b5a7e15b630ab7b6d19031c21fedd51c3ae87556b7772c6cc45305b4ea",
+    "IncubatorWiFi/network_service.h": "56bc125e2a31e1030cbfa9be5b2b5f9021f74be84e96937ad2f1f7d6c980b974",
+    "IncubatorWiFi/web_ui.h": "fc1fb0f83fb775e9f4bc70174da4e831f4a821b4db60b91271ee441d94ffa4c2",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "7b15b155bcf700940f5e143ea4ef78016896925d3f65fc9dff0d8e197460a40a",
+    "README.zh-CN.md": "bf74bd1a9d76576b4f706d149d643df599833e72316114a87c0ad7a19f0cb0b3",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}

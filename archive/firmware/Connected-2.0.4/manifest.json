@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "version": "Connected-2.0.4",
+  "kind": "firmware",
+  "status": "historical-source",
+  "archive_date": "2026-10-16",
+  "provenance": [
+    "IncubatorConnected-2.0.4.zip"
+  ],
+  "validation": {
+    "archive_integrity": true,
+    "full_build_revalidated": false,
+    "hardware_revalidated": false
+  },
+  "configuration": "Example network endpoints; configure the actual device and broker.",
+  "details": {
+    "ble": "Arduino-ESP32 built-in BLE",
+    "libraries": [
+      "Adafruit SSD1306 2.5.17",
+      "Adafruit GFX 1.12.6",
+      "Adafruit BusIO 1.17.4",
+      "U8g2_for_Adafruit_GFX 1.8.0"
+    ],
+    "companion": "MQTT broker / HA only",
+    "pin_definitions": [
+      "constexpr uint8_t LIGHT_PIN[2] = {4,7}, BUTTON_PIN[3] = {0,1,10};",
+      "Wire.begin(6,5,400000);Wire.setTimeOut(30);"
+    ],
+    "optical_inputs": false
+  },
+  "files": {
+    "IncubatorConnected/IncubatorConnected.ino": "92598be2c0d3699754c53fdab934bb3d671bdcbcaaa68360f492747b760a12ef",
+    "IncubatorConnected/application.cpp": "8916f5a4a02af9bea9836bd878fad6b297dc8d0a77788cbc73b438c935d7a0a0",
+    "IncubatorConnected/ble_service.cpp": "9565f1780663b10cb151ada1736db0ea64dfdaff4846264e4ef499cccc644f34",
+    "IncubatorConnected/bounded_dht.h": "e4ef5d1f862b19ee1ed522a46ec995381112328f0464e7161f24782e71202408",
+    "IncubatorConnected/connected_regression_tests.cpp": "e46fd1485d04b55e08c87c7765080d75b779f146819d8fa37cecf10fc7c613b1",
+    "IncubatorConnected/control_service.h": "e555a0c4036f3e1c1ccde5b00386c9d31953a4c46991c98db34363fc547a8b18",
+    "IncubatorConnected/dht_decode.h": "79797f61f8760e2af1ba4126c6cd1554e7227c19549c94187bfe3d8f9b2e91fa",
+    "IncubatorConnected/dht_decode_tests.cpp": "3d4f852dbe8575be45423fa851327e4e3fe28721b8f561c7fbdc79d28391f035",
+    "IncubatorConnected/event_log.cpp": "9d6fe0e709d430a95a2d509125daf2e4b57a57bfffe5a28b2d28b921d7427793",
+    "IncubatorConnected/event_log.h": "59037cd3d4539de39e5b51f43951a52ca43806aa1f10d87bd54f74494324afd0",
+    "IncubatorConnected/format_decimal.h": "75f6329b208687d7a11bbed258b8b82fe76e8d452ad6814cd31cc987190aaab0",
+    "IncubatorConnected/format_decimal_tests.cpp": "a847a5b60d17afbea26e089c7f25033f54ad9d330cf8a22fe429d4e4a87021bd",
+    "IncubatorConnected/json_stream.h": "2c878a53095ce7b816391c7013d3b9f4011effbbce44eaec822e622fc9563423",
+    "IncubatorConnected/mqtt_publish_flow.h": "58d8785793e6f029d86ad4ed5d53fd511bf8196aa539261ee73548c74411ba70",
+    "IncubatorConnected/mqtt_raw_tcp.cpp": "eeae0ed16f6041a3307a9b12464fda50d77f9e71956ccf133726a6ca55e088eb",
+    "IncubatorConnected/mqtt_raw_tcp.h": "6b76aea16a838c3fb886ed5199f58e2e817b534f40b56b9d07891257c76427dc",
+    "IncubatorConnected/mqtt_service.cpp": "c365ac9edd55d2edb34e13d50cd7f11c14c369e2c03a431b7bbabc567d850eb7",
+    "IncubatorConnected/mqtt_service.h": "d5293da319916ff80632e3dd2ff44632626359b816381be720e56fe166930a4d",
+    "IncubatorConnected/network_service.cpp": "b2e0f0d184621d9620b5a9713c22cd792a94ad3931e94ce614a370cd5307d81d",
+    "IncubatorConnected/program_logic.h": "ee71bc812e27520d2fc0b16001b2d8cce55c38bf77c2d8694fa91923586a1b9b",
+    "IncubatorConnected/program_logic_tests.cpp": "fd98252edac6ea5926a801a249766d18535ff83e40e977e724bea8657f30fad8",
+    "IncubatorConnected/pwm_result.h": "ba37df32562fc9f1ca8c48114f16532f5fb1f0d1d4196fc2aa4416633481cb78",
+    "IncubatorConnected/web_state_json.h": "c9866d452db64a9dbcf15dd0f1912cf9468ea3cc1fdb22389c93ee52cd972996",
+    "IncubatorConnected/web_state_tests.cpp": "9b81613290595d9d831ea351ab7a3a15b2dabc04c127f51d642c3856ab746453",
+    "IncubatorConnected/web_ui.h": "b77b044d65b0d0bcde3575923871a3e9c7ea46dd5435df72646b758a10f39586",
+    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
+    "README.md": "c93ea8e96f49b489642a2c32d4ef911c8f903acd4cf77cca73ab666277d5a686",
+    "README.zh-CN.md": "294d1fe2d75df3eea0c67175e26efb7f37fb1730a92e77114748b611e74c821a",
+    "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
+  }
+}
