@@ -1,0 +1,4 @@
+Based on official NimBLE-Arduino 2.5.1. Original LICENSE retained.
+Upstream: https://github.com/h2zero/NimBLE-Arduino/releases/tag/2.5.1
+Changed: library name, wrapper include, one peripheral connection, central and observer disabled.
+Host stack, HCI and MSYS buffers, security/bonds unchanged.

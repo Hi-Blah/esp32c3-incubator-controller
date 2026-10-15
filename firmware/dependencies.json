@@ -1,0 +1,34 @@
+{
+  "arduinoEsp32": "3.3.12",
+  "fqbn": "esp32:esp32:esp32c3:CDCOnBoot=cdc,PartitionScheme=huge_app,FlashSize=4M",
+  "libraries": [
+    {
+      "name": "Adafruit SSD1306",
+      "version": "2.5.17",
+      "url": "https://downloads.arduino.cc/libraries/github.com/adafruit/Adafruit_SSD1306-2.5.17.zip",
+      "sha256": "9b8a9c29a16576d66bce16ed9f6a731632fecbb477171f38a6bc033fda15dd06"
+    },
+    {
+      "name": "Adafruit GFX Library",
+      "version": "1.12.6",
+      "url": "https://downloads.arduino.cc/libraries/github.com/adafruit/Adafruit_GFX_Library-1.12.6.zip",
+      "sha256": "7d4dc7a7522716d2c88a3b1b9b13521d33cfeeae9ebffa42c2dba0559696a997"
+    },
+    {
+      "name": "Adafruit BusIO",
+      "version": "1.17.4",
+      "url": "https://downloads.arduino.cc/libraries/github.com/adafruit/Adafruit_BusIO-1.17.4.zip",
+      "sha256": "c7bab1b6c6eee64b50964c8e149b795719a01f1d9dfcdcef170b35daa696349b"
+    },
+    {
+      "name": "U8g2_for_Adafruit_GFX",
+      "version": "1.8.0",
+      "url": "https://downloads.arduino.cc/libraries/github.com/olikraus/U8g2_for_Adafruit_GFX-1.8.0.zip",
+      "sha256": "9f79d2c8eb37e2e2cf2b1359e7324c420fe409b4c2a1aebcebb5a19e7623bf05"
+    }
+  ],
+  "nimble": {
+    "path": "third_party/IncubatorNimBLE",
+    "version": "2.5.1"
+  }
+}

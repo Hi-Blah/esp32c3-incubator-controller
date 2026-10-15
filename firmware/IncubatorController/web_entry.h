@@ -1,0 +1,13 @@
+#pragma once
+#include <Arduino.h>
+#ifndef INC_NAS_WEB_ORIGIN
+#define INC_NAS_WEB_ORIGIN "http://nas.example.local:8790"
+#endif
+const char WEB_ENTRY[] PROGMEM=R"HTML(<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>培养箱入口</title><style>body{font:17px system-ui;background:#f1f5f3;color:#18312c;margin:24px;max-width:650px}button,input,a{font:inherit;padding:10px;margin:6px 0}input{max-width:90%}button{background:#1f6a4a;color:white;border:0;border-radius:7px}a{display:block}#msg{white-space:pre-wrap}details{margin-top:24px}</style><h1>培养箱控制</h1><p id="msg">查询连接状态…</p><a id="nas">打开NAS完整控制台</a><a href="/local">打开本机完整页面（离线、配网和连接设置）</a><button id="stop">关闭并锁定</button><details><summary>添加Wi-Fi</summary><form id="wifi"><label>SSID<br><input id="ssid" maxlength="32" required></label><br><label>密码<br><input id="pw" type="password" minlength="8" maxlength="63" required></label><br><button>保存</button></form></details><script>
+const nas=')HTML" INC_NAS_WEB_ORIGIN R"HTML(',msg=document.getElementById('msg');let csrf='',redirected=false;
+const portal=nas+'/device/?source='+encodeURIComponent(location.origin);document.getElementById('nas').href=portal;
+async function post(path,data){if(!csrf)throw Error('尚未取得设备状态');const r=await fetch(path,{method:'POST',headers:{'X-CSRF-Token':csrf},body:new URLSearchParams(data)});const j=await r.json();msg.textContent=j.message;if(!r.ok||!j.ok)throw Error(j.message);}
+document.getElementById('stop').onclick=()=>post('/api/command',{cmd:'disarm'}).catch(e=>msg.textContent=e.message);
+document.getElementById('wifi').onsubmit=async e=>{e.preventDefault();try{await post('/api/wifi',{op:'add',ssid:document.getElementById('ssid').value,password:document.getElementById('pw').value});document.getElementById('pw').value='';}catch(e){msg.textContent=e.message;}};
+async function poll(){try{const c=new AbortController(),timer=setTimeout(()=>c.abort(),5000);let r,s;try{r=await fetch('/api/state',{cache:'no-store',signal:c.signal});s=await r.json();}finally{clearTimeout(timer);}if(!r.ok||!s.ok)throw Error('设备暂时不可用');csrf=s.csrf;msg.textContent=s.firmware+'\n'+s.clock+'\n'+(s.wifi.connected?s.wifi.ssid+' '+s.wifi.ip:'尚未接入Wi-Fi')+'\n'+(s.mqtt.nasAlive?'NAS握手正常，加载完整界面…':'本机控制可用；NAS暂未就绪');if(s.mqtt.nasAlive&&!redirected){const c=new AbortController(),timer=setTimeout(()=>c.abort(),2500);try{const r=await fetch(nas+'/assets/ready',{mode:'cors',credentials:'omit',cache:'no-store',signal:c.signal});if(r.ok&&(await r.json()).device_ui){redirected=true;location.replace(portal);return;}}catch(e){}finally{clearTimeout(timer);}}}catch(e){msg.textContent='本机状态查询失败，请稍后重试';}setTimeout(poll,8000);}poll();
+</script></html>)HTML";

@@ -1,0 +1,128 @@
+{
+  "name": "incubator",
+  "services": {
+    "broker": {
+      "restart": "unless-stopped",
+      "user": "${APP_UID:-1000}:${APP_GID:-1000}",
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      },
+      "image": "${MOSQUITTO_IMAGE:-eclipse-mosquitto:2.1.2-alpine}",
+      "ports": [
+        "${MQTT_BIND_IP:-0.0.0.0}:${MQTT_PORT:-1883}:1883"
+      ],
+      "volumes": [
+        "./runtime/mqtt:/mosquitto/config:ro",
+        "./runtime/mqtt-data:/mosquitto/data"
+      ],
+      "read_only": true,
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=4m"
+      ]
+    },
+    "recorder": {
+      "restart": "unless-stopped",
+      "user": "${APP_UID:-1000}:${APP_GID:-1000}",
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      },
+      "image": "incubator-recorder:2.2.3",
+      "build": {
+        "context": "./services/recorder",
+        "args": {
+          "PYTHON_IMAGE": "${PYTHON_IMAGE:-python:3.12-slim}"
+        }
+      },
+      "depends_on": [
+        "broker"
+      ],
+      "environment": {
+        "DEVICE_ID": "${DEVICE_ID}",
+        "MQTT_HOST": "broker",
+        "MQTT_PORT": "1883",
+        "MQTT_USERNAME": "incubator_logger",
+        "MQTT_PASSWORD_FILE": "/run/secrets/logger_password",
+        "RECORD_DB": "/records/incubator.sqlite3",
+        "DASHBOARD_PORT": "8080",
+        "TZ": "${TZ:-Asia/Shanghai}"
+      },
+      "volumes": [
+        "./runtime/records:/records",
+        "./runtime/secrets/logger_password.txt:/run/secrets/logger_password:ro"
+      ],
+      "ports": [
+        "${DASHBOARD_BIND_IP:-0.0.0.0}:${DASHBOARD_PORT:-8790}:8080"
+      ],
+      "read_only": true,
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ]
+    },
+    "mail": {
+      "restart": "unless-stopped",
+      "user": "${APP_UID:-1000}:${APP_GID:-1000}",
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      },
+      "image": "incubator-recorder:2.2.3",
+      "build": {
+        "context": "./services/recorder",
+        "args": {
+          "PYTHON_IMAGE": "${PYTHON_IMAGE:-python:3.12-slim}"
+        }
+      },
+      "profiles": [
+        "mail"
+      ],
+      "command": [
+        "python3",
+        "-S",
+        "notifier.py"
+      ],
+      "environment": {
+        "RECORD_DB": "/records/incubator.sqlite3",
+        "SMTP_CONFIG": "/app/smtp.json",
+        "TZ": "${TZ:-Asia/Shanghai}"
+      },
+      "volumes": [
+        "./runtime/records:/records",
+        "./runtime/secrets/smtp.json:/app/smtp.json:ro",
+        "./runtime/secrets/smtp_password.txt:/run/secrets/smtp_password:ro"
+      ],
+      "read_only": true,
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ]
+    }
+  }
+}

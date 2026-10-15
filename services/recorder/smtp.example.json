@@ -1,0 +1,11 @@
+{
+  "enabled": false,
+  "host": "smtp.qq.com",
+  "port": 465,
+  "security": "ssl",
+  "username": "sender@example.invalid",
+  "from": "sender@example.invalid",
+  "to": "recipient@example.invalid",
+  "password_file": "/run/secrets/smtp_password",
+  "cooldown_seconds": 600
+}

@@ -1,0 +1,24 @@
+# Local configuration, credentials and records
+.env
+runtime/
+records/
+backups/
+smtp.json
+*_password.txt
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+# Build output and complete flash/NVS dumps
+build/
+dist/
+*.bin
+*.elf
+*.map
+*.zip
+*.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+Thumbs.db

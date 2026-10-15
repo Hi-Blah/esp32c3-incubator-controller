@@ -1,0 +1,9 @@
+ARG PYTHON_IMAGE=python:3.12-slim
+FROM ${PYTHON_IMAGE}
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/app/vendor
+WORKDIR /app
+COPY *.py *.html /app/
+COPY vendor /app/vendor
+ENTRYPOINT []
+USER 1000:1000
+CMD ["python3", "-S", "recorder.py"]

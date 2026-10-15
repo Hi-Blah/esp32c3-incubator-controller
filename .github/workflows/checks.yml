@@ -1,0 +1,21 @@
+name: Checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  source-and-backend:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python tools/audit_public.py
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - run: python tools/test_backend.py
+      - run: python tools/test_logic.py

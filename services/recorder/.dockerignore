@@ -1,0 +1,6 @@
+__pycache__
+*.pyc
+test_*.py
+*.sqlite3*
+smtp.json
+*_password.txt
