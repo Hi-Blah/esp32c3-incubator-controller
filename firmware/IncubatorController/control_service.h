@@ -2,8 +2,8 @@
 #include <Arduino.h>
 #include "program_logic.h"
 enum class ClockSource : uint8_t { Unsynced, Manual, Ntp, Nas };
-inline bool networkClock(ClockSource c){return c==ClockSource::Ntp||c==ClockSource::Nas;}
-inline const char* clockSourceName(ClockSource c){return c==ClockSource::Ntp?"NTP":c==ClockSource::Nas?"NAS":c==ClockSource::Manual?"MANUAL":"UNSYNC";}
+inline constexpr bool networkClock(ClockSource c){return c==ClockSource::Ntp||c==ClockSource::Nas;}
+inline constexpr const char* clockSourceName(ClockSource c){return c==ClockSource::Ntp?"NTP":c==ClockSource::Nas?"NAS":c==ClockSource::Manual?"MANUAL":"UNSYNC";}
 // Validated current-boot NAS heartbeat, consumed by the controller task.
 void controlNasTime(uint64_t echoedUptime,uint64_t receivedEpoch);
 enum class NetworkAction : uint8_t { Restart, Info, OpenAp, Forget, Secrets, RadioInfo, SleepOn, SleepOff };
