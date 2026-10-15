@@ -17,6 +17,7 @@ class ArchiveTests(unittest.TestCase):
      self.assertIn('recorder/compose.archive.yaml',z.namelist())
      compose=json.loads(z.read('recorder/compose.archive.yaml'))
      self.assertIn('MQTT_HOST',compose['services']['recorder']['environment'])
+     if 'recorder/notifier.py' in z.namelist():self.assertIn('mail',compose['services'])
  def test_unsafe_members_are_rejected(self):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d)/'bad.zip'

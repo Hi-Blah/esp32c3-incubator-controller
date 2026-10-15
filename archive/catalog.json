@@ -820,8 +820,8 @@
       "version": "NAS-Recorder-2.2.3",
       "kind": "nas",
       "path": "nas/NAS-Recorder-2.2.3/NAS-Recorder-2.2.3-Source.zip",
-      "sha256": "cb8ea7ac6ad4ac3a9f5dd9c324498525dd962982c19085266dbf694aa4184631",
-      "bytes": 159403,
+      "sha256": "94935c17d462405deb29c447bd243d4e9b292fac4a417e97da3bd07796546411",
+      "bytes": 159439,
       "status": "candidate",
       "details": {
         "cumulative": true,

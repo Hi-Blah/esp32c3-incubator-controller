@@ -31,7 +31,7 @@
     "recorder/Send-IncubatorTestMail.py": "d1db031e7a725f129805c08f62cef7c46bd16d79f1d7a8459e0a701df7137375",
     "recorder/analysis_transport.py": "8e6f8e747cd78beef47c00739b9393f1b64964499084b5947d56d02416b98577",
     "recorder/check_runtime.py": "0fa9c73e809748628a773e6f34a147f19f645c6dfba63b7ab07ed1cb30e38fe9",
-    "recorder/compose.archive.yaml": "c1974d6333fbbdc775a1f29f34ea626072e5ef63e88f1bf96f4f07e55ce234b1",
+    "recorder/compose.archive.yaml": "694610eb44854ed37e59e1b117a124e9b2a2fb8cc082dad6961c26fb116ecd85",
     "recorder/dashboard.html": "8bbac3ed9b51cf04583647ccaa0a7f47d4346f8f0008afb2bf74c96bdb057655",
     "recorder/dashboard.py": "7c7179b473b9c441a0534a539eace36bc03c78ec3247cf0768a88383015fe24e",
     "recorder/device.html": "68237b146a25ba60fc4aa160564346b4aeaceade492e5f7bd94ec1976185a3be",
