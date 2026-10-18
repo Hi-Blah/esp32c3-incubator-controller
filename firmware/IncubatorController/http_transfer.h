@@ -5,6 +5,9 @@
 #include "network_budget.h"
 namespace httptransfer {
 constexpr size_t BLOCK_SIZE=512;
+// Do not hold a client (and its TCP buffers) for the full page deadline when
+// another service has consumed the reserve. Short transients can still drain.
+constexpr uint32_t MEMORY_WAIT_MS=100;
 constexpr uint32_t HEAP_RESERVE=netbudget::HTTP_HEAP, LARGEST_RESERVE=netbudget::HTTP_BLOCK;
 enum class Failure : uint8_t { None, Closed, Deadline, LowMemory, Socket };
 struct WriteResult { int bytes,error; };
@@ -12,12 +15,16 @@ struct Result { size_t sent; Failure failure; int error; };
 // IO writes must be nonblocking. Preserve accepted bytes across short writes;
 // bound each socket write, wait for ACK/heap recovery, and terminate stalled peers.
 template<class IO> constexpr Result transmit(IO &io,const uint8_t *data,size_t length,uint32_t budgetMs){
- const uint64_t start=io.now();size_t offset=0;bool waitingMemory=false;
+ const uint64_t start=io.now();size_t offset=0;bool waitingMemory=false;uint64_t memorySince=0;
  while(offset<length){
   if(!io.connected())return {offset,Failure::Closed,0};
   if(io.now()-start>=budgetMs)return {offset,waitingMemory?Failure::LowMemory:Failure::Deadline,0};
-  waitingMemory=!io.memoryReady(HEAP_RESERVE,LARGEST_RESERVE);
-  if(waitingMemory){io.pause();continue;}
+  if(!io.memoryReady(HEAP_RESERVE,LARGEST_RESERVE)){
+   if(!waitingMemory){waitingMemory=true;memorySince=io.now();}
+   if(io.now()-memorySince>=MEMORY_WAIT_MS)return {offset,Failure::LowMemory,0};
+   io.pause();continue;
+  }
+  waitingMemory=false;
   const size_t remaining=length-offset,count=remaining<BLOCK_SIZE?remaining:BLOCK_SIZE;
   const WriteResult w=io.write(data+offset,count);
   if(w.bytes>0){if(size_t(w.bytes)>count)return {offset,Failure::Socket,EINVAL};offset+=size_t(w.bytes);io.pause();continue;}

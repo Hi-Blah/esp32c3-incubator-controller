@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO,format="%(asctime)s %(levelname)s %(messa
 
 def main():
     import paho.mqtt.client as mqtt
+    logging.info("Recorder runtime=NAS-Recorder-2.2.3a clock_repair_batch=%d",sample_journal.REPAIR_BATCH)
     device=os.getenv("DEVICE_ID","a1b2c3")
     secret=os.getenv("MQTT_PASSWORD_FILE","")
     password=Path(secret).read_text(encoding="utf-8").removesuffix("\n").removesuffix("\r") if secret else os.environ.get("MQTT_PASSWORD","")
@@ -40,7 +41,9 @@ def main():
         while not stopping.wait(5):
             try:
                 with db:analysis_transport.tick(client,db,device,time.time_ns()//1000000,connected.is_set())
-            except sqlite3.Error:logging.warning("NAS monitor DB busy; retry later")
+                sample_journal.repair_pending(db,device)
+            except sqlite3.Error as exc:
+                logging.warning("NAS monitor database retry: %s",getattr(exc,"sqlite_errorname",type(exc).__name__))
         db.close()
     threading.Thread(target=monitor,daemon=True).start()
     def on_connect(c,userdata,flags,reason_code,properties):
@@ -55,6 +58,7 @@ def main():
     def on_message(c,userdata,msg):
         import json
         now=time.time_ns()//1000000
+        started=time.monotonic()
         try:
             if msg.topic==base+"/availability":
                 store.availability(msg.topic,msg.payload.decode("ascii"),now,msg.retain)
@@ -99,7 +103,12 @@ def main():
             logging.exception("Storage failure; leaving MQTT delivery unacknowledged")
             c.publish(base+"/logger/availability","offline",qos=0,retain=True)
             c.disconnect()
-    def on_disconnect(*_):connected.clear()
+        finally:
+            elapsed=time.monotonic()-started
+            if elapsed>=1:logging.warning("Slow recorder delivery: topic=%s elapsed_ms=%d",msg.topic,int(elapsed*1000))
+    def on_disconnect(c,userdata,flags,reason_code,properties):
+        connected.clear()
+        if not stopping.is_set():logging.warning("Recorder MQTT disconnected: reason=%s",reason_code)
     client.on_disconnect=on_disconnect
     client.on_connect=on_connect
     client.on_message=on_message

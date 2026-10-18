@@ -399,7 +399,7 @@ void status(char *b,size_t size) {
   Sensor current;portENTER_CRITICAL(&stateMux);current=sensor;portEXIT_CRITICAL(&stateMux);
   if(clockOk(t))strftime(clock,sizeof(clock),"%Y-%m-%d %H:%M:%S",&t);
   char temperature[20],humidity[20];decimal::sample(temperature,sizeof(temperature),current.t,current.valid);decimal::sample(humidity,sizeof(humidity),current.h,current.valid);
-  snprintf(b,size,"STATUS firmware=Connected-2.2.3 clock=%s source=%s armed=%u limit=%u logic=%s nvs=%u\nENV %sC %s%% valid=%u\nL1 %s %s row=%u rounds=%llu left_ms=%llu\nL2 %s %s row=%u rounds=%llu left_ms=%llu\nNETWORK WiFi=%s SSID=%s ip=%s BLE=%s secure=%u\nRECOVERY enabled=%u count_outage=%u threshold_s=%lu checkpoint_s=%lu waiting=%u gap_ms=%llu",
+  snprintf(b,size,"STATUS firmware=Connected-2.2.3b clock=%s source=%s armed=%u limit=%u logic=%s nvs=%u\nENV %sC %s%% valid=%u\nL1 %s %s row=%u rounds=%llu left_ms=%llu\nL2 %s %s row=%u rounds=%llu left_ms=%llu\nNETWORK WiFi=%s SSID=%s ip=%s BLE=%s secure=%u\nRECOVERY enabled=%u count_outage=%u threshold_s=%lu checkpoint_s=%lu waiting=%u gap_ms=%llu",
     clock,clockSourceName(clockSource),armed,MAX_ACTIVE_CHANNELS,logicPassed?"PASS":"FAIL",storageReady,
     temperature,humidity,current.valid,output[0]?"ON":"OFF",modeName(settings.config[0].mode),progress[0].row+1,progress[0].completed,progress[0].remainingMs,
     output[1]?"ON":"OFF",modeName(settings.config[1].mode),progress[1].row+1,progress[1].completed,progress[1].remainingMs,
@@ -671,7 +671,7 @@ void applicationSetup(){
   if(!bleStart())usb("ERR BLE unavailable\n");memoryStage("ble",memoryBefore);
   auto diagnostic=eventLogView();memoryInfo();
   usb("MODULES BLE=%u DHT=%u OLED=%u PHOTO=%u AO=%u,%u manual_resume=%u\n",INC_ENABLE_BLE,INC_ENABLE_DHT,INC_ENABLE_OLED,INC_ENABLE_PHOTO,INC_PHOTO1_PIN,INC_PHOTO2_PIN,manualRecoveryEnabled);
-  usb("BOOT Connected-2.2.3 GPIO SDA%d SCL%d DHT%d L1=%d L2=%d limit=%u logic=%s reset=%s boot=%lu\nUse help, status, diag, mqtt info. First-use log storage: logs init.\n",INC_I2C_SDA_PIN,INC_I2C_SCL_PIN,INC_DHT_PIN,INC_LIGHT1_PIN,INC_LIGHT2_PIN,MAX_ACTIVE_CHANNELS,logicPassed?"PASS":"FAIL",diagnostic.resetReason,static_cast<unsigned long>(diagnostic.bootCount));
+  usb("BOOT Connected-2.2.3b GPIO SDA%d SCL%d DHT%d L1=%d L2=%d limit=%u logic=%s reset=%s boot=%lu\nUse help, status, diag, mqtt info. First-use log storage: logs init.\n",INC_I2C_SDA_PIN,INC_I2C_SCL_PIN,INC_DHT_PIN,INC_LIGHT1_PIN,INC_LIGHT2_PIN,MAX_ACTIVE_CHANNELS,logicPassed?"PASS":"FAIL",diagnostic.resetReason,static_cast<unsigned long>(diagnostic.bootCount));
 }
 void applicationLoop(){
   serviceSerial();serviceButtons();

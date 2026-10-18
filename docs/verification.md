@@ -1,6 +1,8 @@
 # Verification record / 验证记录
 
-Candidate: Connected-2.2.3 / NAS-Recorder-2.2.3. Verified: 2026-10-16 (Asia/Shanghai).
+NAS-only hotfix: NAS-Recorder-2.2.3a, 2026-10-18 (Asia/Shanghai). The 148-test NAS suite passed with the bundled paho-mqtt 2.1.0. New regressions exercise bounded clock repair, trusted-history preservation, interrupted repair rollback and concurrent NAS/NTP refinement. A synthetic same-boot database (2,133 journal / 48,649 environment / 205,602 optical rows) exceeded a 100-second budget with the original importer; the fixed new-packet path took approximately 16 ms on the development workstation. This is not a production NAS measurement; deployment stability remains to be checked. See [details](nas-2.2.3a.md) / [中文](nas-2.2.3a-zh-CN.md).
+
+Original candidate: Connected-2.2.3 / NAS-Recorder-2.2.3. Verified: 2026-10-16 (Asia/Shanghai).
 
 - NAS Python suite: 141 tests passed locally and in CI on Python 3.12 and 3.13, including commit receipts, duplicate replay, clock repair, NAS/NTP source handling, historical/live isolation, mail retry behavior and the strict 180-second connection-notice boundary. SMTP transport is mocked; these tests send no real mail.
 - Public deployment/wiki/archive tooling: 7 tests passed.

@@ -22,7 +22,7 @@ def start(path,device,password,gateway=None):
   def do_GET(self):
    route=urlparse(self.path);q=parse_qs(route.query)
    if route.path=="/assets/ready":
-    data=b'{"version":"NAS-Recorder-2.2.3","device_ui":true}';self.send_response(200);self.send_header("Content-Type","application/json");self.send_header("Access-Control-Allow-Origin","*");self.send_header("Cache-Control","no-store");self.send_header("Content-Length",str(len(data)));self.end_headers();self.wfile.write(data);return
+    data=b'{"version":"NAS-Recorder-2.2.3a","device_ui":true}';self.send_response(200);self.send_header("Content-Type","application/json");self.send_header("Access-Control-Allow-Origin","*");self.send_header("Cache-Control","no-store");self.send_header("Content-Length",str(len(data)));self.end_headers();self.wfile.write(data);return
    if not self.authenticated():return
    if route.path=="/device/":
     data=Path(__file__).with_name("device.html").read_bytes();self.send_response(200);self.send_header("Content-Type","text/html; charset=utf-8");self.send_header("Content-Length",str(len(data)));self.end_headers();self.wfile.write(data);return

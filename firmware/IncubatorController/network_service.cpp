@@ -4,6 +4,8 @@
 #include "event_log.h"
 #include "web_ui.h"
 #include "web_entry.h"
+#include "entry_state_json.h"
+#include "http_response_policy.h"
 #include "web_ui_gzip.h"
 #include "http_transfer.h"
 #include <lwip/sockets.h>
@@ -29,6 +31,8 @@ constexpr uint32_t LIST_SCHEMA = 0xC3062101UL;
 struct Credentials { char ssid[33], password[64]; };
 struct WifiList { uint32_t schema; uint8_t count; Credentials items[MAX_WIFI]; } list = {};
 WebServer server(80); Preferences prefs;
+// The HTTP task is single threaded; both state endpoints reuse one snapshot.
+ControlSnapshot httpSnapshot={};
 QueueHandle_t replies = nullptr, actions = nullptr;
 portMUX_TYPE viewMux = portMUX_INITIALIZER_UNLOCKED;
 NetworkView sharedView = {};
@@ -73,7 +77,7 @@ void load(){prefsReady=prefs.begin("inc-net",false);if(prefsReady)password=prefs
   struct Legacy {uint32_t schema;char ssid[33],password[64];} old={};
   if(prefsReady&&prefs.getBytesLength("wifi")==sizeof(old)&&prefs.getBytes("wifi",&old,sizeof(old))==sizeof(old)&&old.schema==0xC3061001UL){Credentials c={};memcpy(c.ssid,old.ssid,sizeof(c.ssid));memcpy(c.password,old.password,sizeof(c.password));if(validCredential(c)){list.count=1;list.items[0]=c;saved=saveList(list);}}
 }
-void headers(){server.sendHeader("Cache-Control","no-store");server.sendHeader("X-Content-Type-Options","nosniff");server.sendHeader("X-Frame-Options","DENY");server.sendHeader("Referrer-Policy","no-referrer");server.sendHeader("Content-Security-Policy","default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");}
+void headers(bool entry=false){server.sendHeader("Cache-Control","no-store");server.sendHeader("X-Content-Type-Options","nosniff");server.sendHeader("X-Frame-Options","DENY");server.sendHeader("Referrer-Policy","no-referrer");server.sendHeader("Content-Security-Policy",entry?httppolicy::entryCsp:httppolicy::localCsp);}
 void response(int code,bool ok,const String &message){headers();server.send(code,"application/json; charset=utf-8",String("{\"ok\":")+(ok?"true":"false")+",\"message\":"+quoted(message)+"}");}
 bool authorized(bool mutation=false){const String host=server.hostHeader();
   if(!httpaccess::ipv4Authority(host.c_str())){response(403,false,"ERR use an IPv4 address with an optional port");return false;}
@@ -83,6 +87,16 @@ bool authorized(bool mutation=false){const String host=server.hostHeader();
 }
 std::atomic<bool> httpBusy(false);
 struct HttpBusyGuard {HttpBusyGuard(){httpBusy.store(true);}~HttpBusyGuard(){httpBusy.store(false);}};
+bool admitResponse(bool page=false){
+ if(ESP.getFreeHeap()>=httptransfer::HEAP_RESERVE&&ESP.getMaxAllocHeap()>=httptransfer::LARGEST_RESERVE)return true;
+ httpLastFailure=httptransfer::Failure::LowMemory;httpLastErrno=0;
+ // Reject before announcing a successful response and a large Content-Length.
+ // The small failure body is also useful when the browser opens /local itself.
+ headers();server.sendHeader("Retry-After","10");
+ if(page)server.send(503,"text/html; charset=utf-8","<!doctype html><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width\"><title>本机网页繁忙</title><p>本机网页资源暂时不足，控制程序继续运行。请稍后重试，或使用NAS控制页面。</p><a href=\"" INC_NAS_WEB_ORIGIN "/device/\">打开NAS控制页面</a>");
+ else server.send(503,"application/json; charset=utf-8","{\"ok\":false,\"message\":\"本机网页资源暂时不足，请使用NAS页面或稍后重试\"}");
+ return false;
+}
 struct HttpIO {
  NetworkClient &client;
  uint64_t now()const{return monoMs();}
@@ -105,6 +119,7 @@ void localHome(){
  if(!authorized())return;
  HttpBusyGuard guard;
  ++homeRequests;
+ if(!admitResponse(true)){++homeFailures;homeLastMs=0;homeLastSent=0;return;}
  const bool gzip=httptransfer::acceptsGzip(server.header("Accept-Encoding").c_str());
  const uint8_t *body=gzip?WEB_UI_GZIP:reinterpret_cast<const uint8_t*>(WEB_UI);
  const size_t length=gzip?sizeof(WEB_UI_GZIP):sizeof(WEB_UI)-1;
@@ -114,10 +129,20 @@ void localHome(){
  if(Serial)Serial.printf("WEB_HOME encoding=%s sent=%lu/%lu elapsed_ms=%lu result=%u errno=%d heap_free=%lu largest=%lu\n",gzip?"gzip":"plain",static_cast<unsigned long>(result.sent),static_cast<unsigned long>(length),static_cast<unsigned long>(homeLastMs),static_cast<unsigned>(result.failure),result.error,static_cast<unsigned long>(ESP.getFreeHeap()),static_cast<unsigned long>(ESP.getMaxAllocHeap()));
 }
 
-void home(){if(!authorized())return;HttpBusyGuard guard;++homeRequests;headers();server.setContentLength(sizeof(WEB_ENTRY)-1);server.send(200,"text/html; charset=utf-8","");NetworkClient client=server.client();HttpIO io={client};const uint64_t start=monoMs();const auto result=httptransfer::transmit(io,reinterpret_cast<const uint8_t*>(WEB_ENTRY),sizeof(WEB_ENTRY)-1,5000);homeLastMs=monoMs()-start;homeLastSent=result.sent;if(result.failure!=httptransfer::Failure::None){++homeFailures;++responseWriteFailures;httpLastFailure=result.failure;httpLastErrno=result.error;client.stop();}if(Serial)Serial.printf("WEB_ENTRY sent=%lu/%lu elapsed_ms=%lu result=%u\n",static_cast<unsigned long>(result.sent),static_cast<unsigned long>(sizeof(WEB_ENTRY)-1),static_cast<unsigned long>(homeLastMs),static_cast<unsigned>(result.failure));}
+void home(){if(!authorized())return;HttpBusyGuard guard;++homeRequests;if(!admitResponse(true)){++homeFailures;homeLastMs=0;homeLastSent=0;return;}headers(true);server.setContentLength(sizeof(WEB_ENTRY)-1);server.send(200,"text/html; charset=utf-8","");NetworkClient client=server.client();HttpIO io={client};const uint64_t start=monoMs();const auto result=httptransfer::transmit(io,reinterpret_cast<const uint8_t*>(WEB_ENTRY),sizeof(WEB_ENTRY)-1,5000);homeLastMs=monoMs()-start;homeLastSent=result.sent;if(result.failure!=httptransfer::Failure::None){++homeFailures;++responseWriteFailures;httpLastFailure=result.failure;httpLastErrno=result.error;client.stop();}if(Serial)Serial.printf("WEB_ENTRY sent=%lu/%lu elapsed_ms=%lu result=%u\n",static_cast<unsigned long>(result.sent),static_cast<unsigned long>(sizeof(WEB_ENTRY)-1),static_cast<unsigned long>(homeLastMs),static_cast<unsigned>(result.failure));}
+void entryState(){
+ if(!authorized())return;HttpBusyGuard guard;++stateRequests;if(!admitResponse())return;
+ controlRead(httpSnapshot);const bool wifi=WiFi.status()==WL_CONNECTED;
+ const String ssid=wifi?WiFi.SSID():String(""),ip=wifi?WiFi.localIP().toString():String("");
+ jsonstream::Buffer<512> buffer;jsonstream::Writer<jsonstream::Buffer<512>> body(buffer);
+ entrystate::emit(body,"Connected-2.2.3b",csrf.c_str(),httpSnapshot.clockText,ssid.c_str(),ip.c_str(),wifi,mqttNasAlive());
+ if(!body.ok()){response(503,false,"ERR entry state exceeds bounded response size");return;}
+ headers();server.setContentLength(buffer.count);server.send(200,"application/json; charset=utf-8","");
+ NetworkClient client=server.client();if(!sendBody(client,reinterpret_cast<const uint8_t*>(buffer.data),buffer.count,1000))++responseWriteFailures;
+}
 void state(){
- if(!authorized())return;HttpBusyGuard guard;++stateRequests;
- static ControlSnapshot s={};controlRead(s);const auto b=bleView();const auto m=mqttView();const auto d=eventLogView();const bool wifi=WiFi.status()==WL_CONNECTED;
+ if(!authorized())return;HttpBusyGuard guard;++stateRequests;if(!admitResponse())return;
+ auto &s=httpSnapshot;controlRead(s);const auto b=bleView();const auto m=mqttView();const auto d=eventLogView();const bool wifi=WiFi.status()==WL_CONNECTED;
  const String ssid=wifi?WiFi.SSID():String(""),ip=wifi?WiFi.localIP().toString():String(""),apIp=apActive?WiFi.softAPIP().toString():String("");
  char t[20],h[20];decimal::sample(t,sizeof(t),s.temperature,s.sensorValid);decimal::sample(h,sizeof(h),s.humidity,s.sensorValid);
  webstate::Input in={s,b,m,d,csrf.c_str(),t,h,ssid.c_str(),ip.c_str(),apIp.c_str(),wifi,apActive,list.count,{},ESP.getFreeHeap(),ESP.getMinFreeHeap(),ESP.getMaxAllocHeap()};
@@ -163,7 +188,7 @@ void mqttHandler(){if(!authorized(true))return;if(controlSnapshot().armed){respo
 }
 void photoModelHandler(){if(!authorized())return;response(200,true,"Optical models are stored on NAS. Open the main portal at / for its configured link.");}
 void setupServer(){const char *h[]={"X-CSRF-Token","Origin","Accept-Encoding"};server.collectHeaders(h,3);server.on("/",HTTP_GET,home);server.on("/local",HTTP_GET,localHome);
-  server.on("/api/state",HTTP_GET,state);server.on("/api/photo-model",HTTP_GET,photoModelHandler);server.on("/api/command",HTTP_POST,command);server.on("/api/wifi",HTTP_POST,wifiHandler);server.on("/api/mqtt",HTTP_POST,mqttHandler);server.onNotFound([]{response(404,false,"ERR not found");});server.begin();
+  server.on("/api/entry",HTTP_GET,entryState);server.on("/api/state",HTTP_GET,state);server.on("/api/photo-model",HTTP_GET,photoModelHandler);server.on("/api/command",HTTP_POST,command);server.on("/api/wifi",HTTP_POST,wifiHandler);server.on("/api/mqtt",HTTP_POST,mqttHandler);server.onNotFound([]{response(404,false,"ERR not found");});server.begin();
 }
 void timeAvailable(timeval *){time_t e=time(nullptr);if(e>=1704067200LL&&e<4102444800LL){everSynced.store(true);synced.store(true);}}
 void startNtp(){esp_sntp_stop();esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);esp_sntp_setservername(0,"ntp.aliyun.com");esp_sntp_setservername(1,"pool.ntp.org");esp_sntp_setservername(2,"time.cloudflare.com");esp_sntp_init();ntpAt=millis();}

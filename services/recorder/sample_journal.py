@@ -2,6 +2,7 @@
 import json, math, re
 MIN_EPOCH=1704067200000
 MAX_EPOCH=4102444799999
+REPAIR_BATCH=128
 
 def integer(v,lo=0,hi=2**63-1):
     if type(v) is not int or not lo<=v<=hi:raise ValueError('sample integer bounds')
@@ -14,12 +15,66 @@ def initialize(db):
       sensor_uptime_ms INTEGER,epoch_ms INTEGER,time_quality TEXT,
       received_ms INTEGER,payload TEXT,PRIMARY KEY(device,boot,seq));
     CREATE INDEX IF NOT EXISTS offline_timeline ON offline_samples(device,boot_order,uptime_ms);
+    CREATE INDEX IF NOT EXISTS offline_unknown_clock ON offline_samples(device,boot,uptime_ms)
+      WHERE time_quality='unknown';
+    CREATE INDEX IF NOT EXISTS offline_nas_clock ON offline_samples(device,boot,uptime_ms)
+      WHERE time_quality IN ('nas','backfilled-nas');
     CREATE TABLE IF NOT EXISTS sample_clock_anchors(
       device TEXT,boot TEXT,offset_ms INTEGER,uptime_ms INTEGER,epoch_ms INTEGER,
       received_ms INTEGER,quality TEXT,PRIMARY KEY(device,boot));
     CREATE TABLE IF NOT EXISTS sample_journal_status(
       device TEXT PRIMARY KEY,received_ms INTEGER,payload TEXT);
     ''')
+
+def _repair_clock(db,device,boot,anchor,limit=REPAIR_BATCH):
+    """Repair only unresolved rows, using indexed point updates and a bounded batch.
+
+    Rewriting all sensor/light rows for every packet blocked the MQTT network loop
+    as history grew. Already trusted NTP rows must never be revisited here.
+    The caller owns the transaction; a receipt still follows a durable commit.
+    """
+    offset,quality=anchor
+    changed=0
+    predicates=["time_quality='unknown'"]
+    if quality=='ntp':predicates.append("time_quality IN ('nas','backfilled-nas')")
+    for predicate in predicates:
+        if changed>=limit:break
+        rows=db.execute(f'''SELECT seq,uptime_ms FROM offline_samples
+            WHERE device=? AND boot=? AND {predicate} AND uptime_ms BETWEEN ? AND ?
+            ORDER BY uptime_ms LIMIT ?''',
+            (device,boot,MIN_EPOCH-offset,MAX_EPOCH-offset,limit-changed)).fetchall()
+        for seq,uptime in rows:
+            epoch=offset+uptime
+            result=db.execute(f'UPDATE offline_samples SET epoch_ms=?,time_quality=? WHERE device=? AND boot=? AND seq=? AND {predicate}',
+                (epoch,'backfilled-'+quality,device,boot,seq))
+            if not result.rowcount:continue
+            # These primary-key lookups also preserve rows which are not journal imports.
+            for table in ('sensor_samples','light_samples'):
+                db.execute(f'UPDATE {table} SET epoch_ms=?,trusted=1 WHERE boot=? AND sample_uptime=?',
+                    (epoch,boot,uptime))
+            changed+=1
+    return changed
+
+def repair_pending(db,device,limit=REPAIR_BATCH):
+    """Continue bounded clock repairs even if no further replay packets arrive."""
+    if not 1<=limit<=REPAIR_BATCH:raise ValueError('clock repair batch bounds')
+    for predicate,anchor_rule in [("o.time_quality='unknown'",''),
+            ("o.time_quality IN ('nas','backfilled-nas')","AND a.quality='ntp'")]:
+        row=db.execute(f'''SELECT o.boot,a.offset_ms,a.quality FROM offline_samples o
+            JOIN sample_clock_anchors a ON a.device=o.device AND a.boot=o.boot
+            WHERE o.device=? AND {predicate} {anchor_rule}
+            AND a.offset_ms+o.uptime_ms BETWEEN ? AND ? LIMIT 1''',
+            (device,MIN_EPOCH,MAX_EPOCH)).fetchone()
+        if row:
+            with db:
+                # The monitor and receive loop have separate connections. Acquire the
+                # short write transaction, then re-read the anchor so a new NTP anchor
+                # cannot be downgraded by a monitor which selected an earlier NAS one.
+                db.execute('BEGIN IMMEDIATE')
+                anchor=db.execute('SELECT offset_ms,quality FROM sample_clock_anchors WHERE device=? AND boot=?',
+                    (device,row[0])).fetchone()
+                return _repair_clock(db,device,row[0],anchor,limit) if anchor else 0
+    return 0
 
 def _history(db,boot,uptime,epoch,received,d,quality):
     flags=d['flags'];trusted=int(quality!='unknown');sensor=bool(flags&1)
@@ -89,12 +144,8 @@ def ingest(db,device,d,received,retained=False):
             db.execute('INSERT INTO offline_samples VALUES(?,?,?,?,?,?,?,?,?,?)',(device,boot,order,seq,uptime,sensor_uptime,resolved,quality,received,canonical))
             _history(db,boot,uptime,resolved,received,d,quality)
         if anchor:
-            # Only this boot can be anchored. Never subtract through a power-off/reboot gap.
-            quality_after='backfilled-'+anchor[1]
-            db.execute("UPDATE offline_samples SET epoch_ms=?+uptime_ms,time_quality=? WHERE device=? AND boot=? AND (time_quality='unknown' OR (?='ntp' AND time_quality LIKE '%nas%')) AND ?+uptime_ms BETWEEN ? AND ?",(anchor[0],quality_after,device,boot,anchor[1],anchor[0],MIN_EPOCH,MAX_EPOCH))
-            for table,column in [('sensor_samples','sample_uptime'),('light_samples','sample_uptime')]:
-                db.execute(f'''UPDATE {table} SET epoch_ms=(SELECT o.epoch_ms FROM offline_samples o WHERE o.device=? AND o.boot={table}.boot AND o.uptime_ms={table}.{column} LIMIT 1),trusted=1
-                WHERE boot=? AND EXISTS(SELECT 1 FROM offline_samples o WHERE o.device=? AND o.boot={table}.boot AND o.uptime_ms={table}.{column} AND o.epoch_ms IS NOT NULL)''',(device,boot,device))
+            # Same-boot repairs only; never infer time across an unpowered reboot gap.
+            _repair_clock(db,device,boot,anchor)
         if meta is not None:db.execute('INSERT OR REPLACE INTO sample_journal_status VALUES(?,?,?)',(device,received,json.dumps(meta,separators=(',',':'))))
     return {'v':1,'boot_id':boot,'seq':seq,'uptime_ms':uptime}
 

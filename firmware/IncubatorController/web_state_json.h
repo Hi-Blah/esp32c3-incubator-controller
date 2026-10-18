@@ -18,7 +18,7 @@ struct Input {
 constexpr const char* mode(program::Mode m){return m==program::Mode::Daily?"DAILY":m==program::Mode::Cycle?"CYCLE":"MANUAL";}
 template<class J> constexpr void emit(J &j,const Input &in){
  const auto&s=in.s;const auto&b=in.b;const auto&m=in.m;const auto&d=in.d;
- j.raw("{\"ok\":true,\"firmware\":\"Connected-2.2.3\",\"csrf\":").quoted(in.csrf);
+ j.raw("{\"ok\":true,\"firmware\":\"Connected-2.2.3b\",\"csrf\":").quoted(in.csrf);
  j.raw(",\"clock\":").quoted(s.clockText).raw(",\"clockSource\":").quoted(clockSourceName(s.clockSource));
  j.raw(",\"armed\":").boolean(s.armed).raw(",\"limit\":").number(s.limit).raw(",\"logicPassed\":").boolean(s.logicPassed).raw(",\"storageReady\":").boolean(s.storageReady);
  j.raw(",\"temperature\":").raw(in.temperature).raw(",\"humidity\":").raw(in.humidity).raw(",\"uptimeSeconds\":").number(s.uptimeMs/1000);

@@ -12,6 +12,75 @@ class JournalTests(unittest.TestCase):
   self.tmp=tempfile.TemporaryDirectory();self.path=str(Path(self.tmp.name)/'data.sqlite3');self.store=Store(self.path,DEVICE);self.db=self.store.db
  def tearDown(self):self.store.close();self.tmp.cleanup()
  def put(self,d):return journal.ingest(self.db,DEVICE,d,NOW+100000)
+ def seed_history(self,count,sensors=None,lights=None,quality='ntp'):
+  boot=sample()['boot_id'];sensors=count if sensors is None else sensors;lights=count*2 if lights is None else lights
+  trusted=quality!='unknown'
+  with self.db:
+   self.db.executemany('INSERT INTO offline_samples VALUES(?,?,?,?,?,?,?,?,?,?)',
+    ((DEVICE,boot,1,str(i+1),(i+1)*10,(i+1)*10,NOW+(i+1)*10 if trusted else None,quality,NOW,'{}') for i in range(count)))
+   self.db.executemany('INSERT INTO sensor_samples VALUES(?,?,?,?,?,?,?,?)',
+    ((boot,(i+1)*5,NOW+(i+1)*5 if trusted else 0,NOW,25.0,50.0,1,int(trusted)) for i in range(sensors)))
+   self.db.executemany('INSERT INTO light_samples VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    ((boot,(i//2+1)*5,i%2+1,NOW+(i//2+1)*5 if trusted else 0,NOW,1200,None,None,None,0,0,0,None,None,'HISTORICAL_RAW',int(trusted),'{}') for i in range(lights)))
+  return boot
+ def test_trusted_packet_does_not_rewrite_trusted_history(self):
+  self.put(sample(trusted=True))
+  self.db.execute("CREATE TRIGGER protect_trusted BEFORE UPDATE ON light_samples WHEN OLD.trusted=1 BEGIN SELECT RAISE(ABORT,'trusted-history-revisited'); END")
+  self.put(sample(seq=2,uptime=2000,trusted=True))
+  self.assertEqual(self.db.execute('SELECT COUNT(*) FROM offline_samples').fetchone()[0],2)
+ def test_replay_query_work_does_not_grow_with_entire_light_history(self):
+  self.seed_history(1000,sensors=2000,lights=4000)
+  calls=[0]
+  def budget():calls[0]+=1;return calls[0]>20
+  self.db.set_progress_handler(budget,10000)
+  try:self.put(sample(seq=1001,uptime=20000,trusted=True))
+  finally:self.db.set_progress_handler(None,0)
+  self.assertLessEqual(calls[0],20)
+ def test_clock_repairs_are_bounded_and_finish_without_new_packets(self):
+  count=journal.REPAIR_BATCH*2+5;boot=self.seed_history(count,quality='unknown')
+  self.put(sample(seq=count+1,uptime=20000,trusted=True))
+  self.assertEqual(self.db.execute("SELECT COUNT(*) FROM offline_samples WHERE time_quality='unknown'").fetchone()[0],count-journal.REPAIR_BATCH)
+  self.assertEqual(journal.repair_pending(self.db,DEVICE),journal.REPAIR_BATCH)
+  self.assertEqual(journal.repair_pending(self.db,DEVICE),5)
+  self.assertEqual(journal.repair_pending(self.db,DEVICE),0)
+  self.assertEqual(self.db.execute('SELECT epoch_ms,trusted FROM sensor_samples WHERE boot=? AND sample_uptime=10',(boot,)).fetchone(),(NOW+10,1))
+  self.assertEqual(self.db.execute('SELECT COUNT(*) FROM nas_live').fetchone()[0],0)
+  self.assertEqual(self.db.execute('SELECT COUNT(*) FROM notifications').fetchone()[0],0)
+ def test_background_repairs_never_anchor_a_different_boot(self):
+  self.put(sample(order=1));self.put(sample(order=2,trusted=True))
+  self.assertEqual(journal.repair_pending(self.db,DEVICE),0)
+  self.assertIsNone(self.db.execute('SELECT epoch_ms FROM offline_samples WHERE boot_order=1').fetchone()[0])
+ def test_ntp_refines_a_large_nas_batch_in_background(self):
+  count=journal.REPAIR_BATCH+9;boot=self.seed_history(count,quality='nas')
+  with self.db:
+   self.db.execute('UPDATE offline_samples SET epoch_ms=epoch_ms+300')
+   self.db.execute('UPDATE sensor_samples SET epoch_ms=epoch_ms+300')
+   self.db.execute('INSERT INTO sample_clock_anchors VALUES(?,?,?,?,?,?,?)',(DEVICE,boot,NOW+300,1000,NOW+1300,NOW+1300,'nas'))
+  self.put(sample(seq=count+1,uptime=20000,trusted=True))
+  self.assertEqual(journal.repair_pending(self.db,DEVICE),9)
+  self.assertEqual(self.db.execute("SELECT COUNT(*) FROM offline_samples WHERE time_quality IN ('nas','backfilled-nas')").fetchone()[0],0)
+  self.assertEqual(self.db.execute('SELECT epoch_ms FROM sensor_samples WHERE sample_uptime=10').fetchone()[0],NOW+10)
+ def test_monitor_rechecks_anchor_after_acquiring_write_transaction(self):
+  d=sample();self.put(d);boot=d['boot_id']
+  with self.db:self.db.execute('INSERT INTO sample_clock_anchors VALUES(?,?,?,?,?,?,?)',(DEVICE,boot,NOW+300,1000,NOW+1300,NOW+1300,'nas'))
+  db=self.db;path=self.path
+  class RacingConnection:
+   def __enter__(self):db.__enter__();return self
+   def __exit__(self,*args):return db.__exit__(*args)
+   def execute(self,sql,*args):
+    if sql=='BEGIN IMMEDIATE':
+     with closing(sqlite3.connect(path)) as other,other:
+      other.execute('UPDATE sample_clock_anchors SET offset_ms=?,quality=?',(NOW,'ntp'))
+    return db.execute(sql,*args)
+  self.assertEqual(journal.repair_pending(RacingConnection(),DEVICE),1)
+  self.assertEqual(db.execute('SELECT epoch_ms,time_quality FROM offline_samples').fetchone(),(NOW+1000,'backfilled-ntp'))
+ def test_failed_clock_repair_rolls_back_anchor_and_new_sample(self):
+  self.put(sample())
+  self.db.execute("CREATE TRIGGER fail_repair BEFORE UPDATE ON sensor_samples BEGIN SELECT RAISE(ABORT,'repair-failed'); END")
+  with self.assertRaises(sqlite3.Error):self.put(sample(seq=2,uptime=2000,trusted=True))
+  self.assertEqual(self.db.execute('SELECT COUNT(*) FROM offline_samples').fetchone()[0],1)
+  self.assertEqual(self.db.execute('SELECT COUNT(*) FROM sample_clock_anchors').fetchone()[0],0)
+  self.assertEqual(self.db.execute('SELECT trusted FROM sensor_samples').fetchone()[0],0)
  def test_offline_unknown_then_ntp_repairs_same_boot(self):
   self.put(sample(uptime=1000));self.put(sample(seq=2,uptime=5000,trusted=True))
   rows=self.db.execute('SELECT epoch_ms,time_quality FROM offline_samples ORDER BY CAST(seq AS INTEGER)').fetchall()

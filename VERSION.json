@@ -1,9 +1,9 @@
 {
-  "firmware": "Connected-2.2.3",
-  "nas": "NAS-Recorder-2.2.3",
+  "firmware": "Connected-2.2.3b",
+  "nas": "NAS-Recorder-2.2.3a",
   "status": "candidate; hardware acceptance pending",
   "baseline": {
-    "firmware": "Connected-2.2.2",
+    "firmware": "Connected-2.2.3",
     "nas": "NAS-Recorder-2.2.2c"
   },
   "license": "not selected"
