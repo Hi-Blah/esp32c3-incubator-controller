@@ -4,7 +4,7 @@
 
 Two independently controlled light channels, sensor acquisition, Home Assistant integration and a NAS recorder for an experimental light incubator. The ESP32 runs the local schedule; the NAS stores history, evaluates optical feedback, fits PWM calibration data and sends notifications.
 
-**Current source: Connected-2.2.3 + NAS-Recorder-2.2.3, a candidate awaiting hardware acceptance.** It adds Flash-backed sensor history to the Connected-2.2.2 / NAS-Recorder-2.2.2c prototype reference pair. See [validation and limitations](wiki/Validation.md) for the verification scope. A project license has not yet been chosen; see [license status](LICENSE-STATUS.md).
+**Current source: Connected-2.2.4 + NAS-Recorder-2.2.3a, a candidate awaiting hardware acceptance.** It includes Flash-backed sensor history, bounded recorder clock repair, and local HTTP/MQTT recovery fixes. See the [firmware changes](docs/firmware-2.2.4.md), [recorder changes](docs/nas-2.2.3a.md), and [validation and limitations](wiki/Validation.md). A project license has not yet been chosen; see [license status](LICENSE-STATUS.md).
 
 ## What is included
 

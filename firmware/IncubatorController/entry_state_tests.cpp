@@ -12,7 +12,7 @@ constexpr bool escapedEntry(){
 constexpr bool boundedEntry(){
  char ssid[33]={};for(unsigned i=0;i<32;++i)ssid[i]=1; // worst case JSON expansion
  jsonstream::Buffer<512>b;jsonstream::Writer<jsonstream::Buffer<512>>j(b);
- entrystate::emit(j,"Connected-2.2.3b","12345678901234567890123456789012","2026-10-19 12:34:56",ssid,"255.255.255.255",true,true);
+ entrystate::emit(j,"Connected-2.2.4","12345678901234567890123456789012","2026-10-19 12:34:56",ssid,"255.255.255.255",true,true);
  return j.ok()&&b.count<512&&!contains(b.data,"lights")&&!contains(b.data,"password")&&contains(b.data,"\"nasAlive\":true");
 }
 static_assert(escapedEntry(),"landing state must remain valid JSON for quoted SSIDs");

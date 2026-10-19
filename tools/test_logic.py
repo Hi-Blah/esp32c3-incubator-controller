@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,subprocess,tempfile
 ROOT=Path(__file__).resolve().parents[1]
-PURE=('connected_regression','daily_log','device_identity','dht_decode','entry_state','format_decimal','http_transfer','nas_web_command','network_budget','program_logic','recovery_protocol')
+PURE=('connected_regression','daily_log','device_identity','dht_decode','entry_state','format_decimal','http_transfer','mqtt_reconnect','nas_web_command','network_budget','program_logic','recovery_protocol')
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--compiler',default='c++');a=p.parse_args();fw=ROOT/'firmware/IncubatorController'
  for name in PURE:subprocess.run([a.compiler,'-std=c++17','-fsyntax-only','-I'+str(fw),str(fw/(name+'_tests.cpp'))],check=True)

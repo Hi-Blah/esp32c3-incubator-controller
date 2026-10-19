@@ -399,7 +399,7 @@ void status(char *b,size_t size) {
   Sensor current;portENTER_CRITICAL(&stateMux);current=sensor;portEXIT_CRITICAL(&stateMux);
   if(clockOk(t))strftime(clock,sizeof(clock),"%Y-%m-%d %H:%M:%S",&t);
   char temperature[20],humidity[20];decimal::sample(temperature,sizeof(temperature),current.t,current.valid);decimal::sample(humidity,sizeof(humidity),current.h,current.valid);
-  snprintf(b,size,"STATUS firmware=Connected-2.2.3b clock=%s source=%s armed=%u limit=%u logic=%s nvs=%u\nENV %sC %s%% valid=%u\nL1 %s %s row=%u rounds=%llu left_ms=%llu\nL2 %s %s row=%u rounds=%llu left_ms=%llu\nNETWORK WiFi=%s SSID=%s ip=%s BLE=%s secure=%u\nRECOVERY enabled=%u count_outage=%u threshold_s=%lu checkpoint_s=%lu waiting=%u gap_ms=%llu",
+  snprintf(b,size,"STATUS firmware=Connected-2.2.4 clock=%s source=%s armed=%u limit=%u logic=%s nvs=%u\nENV %sC %s%% valid=%u\nL1 %s %s row=%u rounds=%llu left_ms=%llu\nL2 %s %s row=%u rounds=%llu left_ms=%llu\nNETWORK WiFi=%s SSID=%s ip=%s BLE=%s secure=%u\nRECOVERY enabled=%u count_outage=%u threshold_s=%lu checkpoint_s=%lu waiting=%u gap_ms=%llu",
     clock,clockSourceName(clockSource),armed,MAX_ACTIVE_CHANNELS,logicPassed?"PASS":"FAIL",storageReady,
     temperature,humidity,current.valid,output[0]?"ON":"OFF",modeName(settings.config[0].mode),progress[0].row+1,progress[0].completed,progress[0].remainingMs,
     output[1]?"ON":"OFF",modeName(settings.config[1].mode),progress[1].row+1,progress[1].completed,progress[1].remainingMs,
@@ -427,6 +427,7 @@ __attribute__((noinline)) bool execute(char *line,char *reply,size_t size) {
   if(!count)return fail("empty command");const char *name=tokens[0];
   if(!strcmp(name,"photocal")&&count==2&&!strcmp(tokens[1],"cancel")){opticalCancel("Cancelled by user");applyOutputs();return ok("calibration cancelled; both lights off");}
   if(!strcmp(name,"photocal")&&count==5&&!strcmp(tokens[1],"start")){uint32_t mask,settle,sample;if(!number(tokens[2],3,mask)||!number(tokens[3],30,settle)||!number(tokens[4],30,sample))return fail("photocal start MASK SETTLE_SECONDS SAMPLE_SECONDS");return opticalStart(mask,settle,sample,reply,size);}
+  if(!strcmp(name,"mqtt")&&count==2&&!strcmp(tokens[1],"diag"))return mqttDiagnostics(reply,size);
   if(optical.active&&strcmp(name,"status")&&strcmp(name,"diag")&&strcmp(name,"errors")&&strcmp(name,"disarm"))return fail("automatic calibration active; cancel before other changes");
   if(!strcmp(name,"status")&&count==1){status(reply,size);return true;}
   if(!strcmp(name,"diag")&&count==1)return diagnostics(reply,size);
@@ -572,7 +573,7 @@ void serviceSerial() {
       else if(!strcmp(line,"device info"))usb("DEVICE logical=%06lx hardware_suffix=%06lx; identity changes take effect after restart\n",static_cast<unsigned long>(deviceIdentityValue()),static_cast<unsigned long>(hardwareSuffix(ESP.getEfuseMac())));
       else if(!strncmp(line,"device id ",10)){if(controlSnapshot().armed||mqttView().enabled)usb("ERR lock both channels and disable MQTT before identity change\n");else usb(deviceIdentitySave(line+10,!strcmp(line+10,"new"))?"OK identity saved; restart before reconnecting MQTT\n":"ERR identity requires six hex digits or new\n");}
       else if(!strcmp(line,"memory"))memoryInfo();
-      else if(!strcmp(line,"help"))usb("status | diag | memory | device info | device id new | logs | logs init | show 1 | show 2 | arm | disarm | on 1 | off 1 | off all | errors | errors clear | pwm info | manualresume on|off\nphoto 1 off|dark|bright|on | photo 1 dim 600 | dailyresume 1 on|off | recovery info | arm 1 | disarm 1 | wifi restart (lock)\ndaily 1 07:00:00-08:00:00,09:00:00-13:00:00\ncycle 1 3 0.5/0.3,2/1 (seconds; 0 repeats = infinite)\npwm 1 50 50 | pwm 1 20000 50 | pwm 1 off (runtime allowed)\nresume 1 advance 3600 60 | resume 1 pause 3600 60 | resume 0 advance 0 60\nnasresume on | nasresume off (lock)\npwmset 1 enable ON | pwmset 1 duty 50 | pwmset 1 frequency 1000\nwifi info | wifi radio | wifi sleep off | wifi sleep on (USB; lock; until reset) | wifi key (local secret display) | wifi ap | wifi forget | ble info | mqtt info | mqtt off | mqtt on | mqtt probe | test\n");
+      else if(!strcmp(line,"help"))usb("status | diag | memory | device info | device id new | logs | logs init | show 1 | show 2 | arm | disarm | on 1 | off 1 | off all | errors | errors clear | pwm info | manualresume on|off\nphoto 1 off|dark|bright|on | photo 1 dim 600 | dailyresume 1 on|off | recovery info | arm 1 | disarm 1 | wifi restart (lock)\ndaily 1 07:00:00-08:00:00,09:00:00-13:00:00\ncycle 1 3 0.5/0.3,2/1 (seconds; 0 repeats = infinite)\npwm 1 50 50 | pwm 1 20000 50 | pwm 1 off (runtime allowed)\nresume 1 advance 3600 60 | resume 1 pause 3600 60 | resume 0 advance 0 60\nnasresume on | nasresume off (lock)\npwmset 1 enable ON | pwmset 1 duty 50 | pwmset 1 frequency 1000\nwifi info | wifi radio | wifi sleep off | wifi sleep on (USB; lock; until reset) | wifi key (local secret display) | wifi ap | wifi forget | ble info | mqtt info | mqtt diag | mqtt off | mqtt on | mqtt probe | test\n");
       else if(used&&!submit(line,Origin::Usb))usb("ERR command queue busy\n");used=0;overflow=false;
     }else if(!overflow){if(c<32||c>126||used>=sizeof(line)-1)overflow=true;else line[used++]=c;}
   }
@@ -671,7 +672,7 @@ void applicationSetup(){
   if(!bleStart())usb("ERR BLE unavailable\n");memoryStage("ble",memoryBefore);
   auto diagnostic=eventLogView();memoryInfo();
   usb("MODULES BLE=%u DHT=%u OLED=%u PHOTO=%u AO=%u,%u manual_resume=%u\n",INC_ENABLE_BLE,INC_ENABLE_DHT,INC_ENABLE_OLED,INC_ENABLE_PHOTO,INC_PHOTO1_PIN,INC_PHOTO2_PIN,manualRecoveryEnabled);
-  usb("BOOT Connected-2.2.3b GPIO SDA%d SCL%d DHT%d L1=%d L2=%d limit=%u logic=%s reset=%s boot=%lu\nUse help, status, diag, mqtt info. First-use log storage: logs init.\n",INC_I2C_SDA_PIN,INC_I2C_SCL_PIN,INC_DHT_PIN,INC_LIGHT1_PIN,INC_LIGHT2_PIN,MAX_ACTIVE_CHANNELS,logicPassed?"PASS":"FAIL",diagnostic.resetReason,static_cast<unsigned long>(diagnostic.bootCount));
+  usb("BOOT Connected-2.2.4 GPIO SDA%d SCL%d DHT%d L1=%d L2=%d limit=%u logic=%s reset=%s boot=%lu\nUse help, status, diag, mqtt info. First-use log storage: logs init.\n",INC_I2C_SDA_PIN,INC_I2C_SCL_PIN,INC_DHT_PIN,INC_LIGHT1_PIN,INC_LIGHT2_PIN,MAX_ACTIVE_CHANNELS,logicPassed?"PASS":"FAIL",diagnostic.resetReason,static_cast<unsigned long>(diagnostic.bootCount));
 }
 void applicationLoop(){
   serviceSerial();serviceButtons();

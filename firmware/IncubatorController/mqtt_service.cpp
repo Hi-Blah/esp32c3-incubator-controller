@@ -27,22 +27,23 @@ struct Config { uint32_t schema; bool enabled; uint16_t port; char host[97],user
 Config stored={},active={};
 portMUX_TYPE configMux=portMUX_INITIALIZER_UNLOCKED,viewMux=portMUX_INITIALIZER_UNLOCKED;
 MqttView view={};
-MqttLifecycle lifecycle={0,0,0,"none"};
+MqttLifecycle lifecycle={};
 std::atomic<bool> changed(false),connected(false),announce(false),probeRequested(false);
 esp_mqtt_client_handle_t client=nullptr;
 std::atomic<int> lastAck(0);
 std::atomic<uint32_t> connectionEpoch(0);
 mqttflow::Flow flow;
 mqttflow::RoutineScheduler routine;
-std::atomic<uint32_t> clientRetryAt(0);uint32_t networkGeneration=0,disconnectedAt=0;
+mqttflow::Session session;
+mqttflow::DisconnectWatch disconnectWatch;
+std::atomic<uint32_t> clientRetryAt(0);uint32_t networkGeneration=0;
 char suffix[7]={},base[40]={},stateTopic[64]={},availability[64]={},commandsTopic[64]={},clientId[40]={},progressTopic[64]={},requestTopic[64]={},replyTopic[64]={};
-constexpr uint8_t DISCOVERY_COUNT=13;
-uint8_t discoveryIndex=0;
+
 uint32_t nextCommand=0,lastState=0,lastAttempt=0,lastProgress=0,lastRecoveryRequest=0;
 
-uint32_t signature=0,lastConfig=0;uint64_t lastConfigState=UINT64_MAX;uint8_t lastMask=255;QueueHandle_t analysisQueue=nullptr;std::atomic<uint32_t> nasSeen(0);
+uint32_t lastConfig=0;uint64_t lastConfigState=UINT64_MAX;uint8_t lastMask=255;QueueHandle_t analysisQueue=nullptr;std::atomic<uint32_t> nasSeen(0);
 struct AnalysisCommand{char json[256];};
-bool announced=false;
+
 uint32_t remotePendingId=0;char remoteReq[25]={},remoteSeen[8][25]={},remoteText[241]={};uint8_t remoteCursor=0;bool remoteOk=false;std::atomic<bool> remoteReady(false);
 // Discovery and state publishing run serially on Arduino loopTask; enqueue copies the payload.
 char publishBuffer[2048]={},discoveryOptions[768]={};
@@ -99,7 +100,7 @@ void callback(void *,esp_event_base_t,int32_t id,void *data){
   auto e=static_cast<esp_mqtt_event_handle_t>(data);
   uint32_t stack=uxTaskGetStackHighWaterMark(nullptr),heapAtEvent=ESP.getFreeHeap();portENTER_CRITICAL(&viewMux);if(!view.stackMinimum||stack<view.stackMinimum)view.stackMinimum=stack;portEXIT_CRITICAL(&viewMux);
   if(id==MQTT_EVENT_BEFORE_CONNECT){portENTER_CRITICAL(&viewMux);++view.connectionAttempts;portEXIT_CRITICAL(&viewMux);}
-  else if(id==MQTT_EVENT_CONNECTED){connected.store(true);waitFor("none");announce.store(true);connectionEpoch.fetch_add(1);portENTER_CRITICAL(&viewMux);view.heapAfterConnect=heapAtEvent;view.lastError=view.errorType=view.transportError=view.socketError=0;portEXIT_CRITICAL(&viewMux);char sampleTopic[64];snprintf(sampleTopic,sizeof(sampleTopic),"%s/samples/ack",base);esp_mqtt_client_subscribe(client,sampleTopic,1);esp_mqtt_client_subscribe(client,commandsTopic,1);esp_mqtt_client_subscribe(client,"homeassistant/status",1);esp_mqtt_client_subscribe(client,replyTopic,1);char t[64];snprintf(t,sizeof(t),"%s/analysis/#",base);esp_mqtt_client_subscribe(client,t,0);snprintf(t,sizeof(t),"%s/analysis/device_command",base);esp_mqtt_client_subscribe(client,t,1);setReply("OK MQTT connected; publishing discovery");}
+  else if(id==MQTT_EVENT_CONNECTED){connectionEpoch.fetch_add(1);connected.store(true);waitFor("none");portENTER_CRITICAL(&viewMux);view.heapAfterConnect=heapAtEvent;view.lastError=view.errorType=view.transportError=view.socketError=0;portEXIT_CRITICAL(&viewMux);char sampleTopic[64];snprintf(sampleTopic,sizeof(sampleTopic),"%s/samples/ack",base);esp_mqtt_client_subscribe(client,sampleTopic,1);esp_mqtt_client_subscribe(client,commandsTopic,1);esp_mqtt_client_subscribe(client,"homeassistant/status",1);esp_mqtt_client_subscribe(client,replyTopic,1);char t[64];snprintf(t,sizeof(t),"%s/analysis/#",base);esp_mqtt_client_subscribe(client,t,0);snprintf(t,sizeof(t),"%s/analysis/device_command",base);esp_mqtt_client_subscribe(client,t,1);setReply("OK MQTT connected; restoring live data");}
   else if(id==MQTT_EVENT_DISCONNECTED)connected.store(false);
   else if(id==MQTT_EVENT_DATA)incoming(e);
   else if(id==MQTT_EVENT_PUBLISHED){lastAck.store(e->msg_id);}
@@ -121,7 +122,7 @@ __attribute__((noinline)) int publishRecord(uint32_t now){
 }
 
 bool discover(unsigned index){
-  if(index>=11){const unsigned ch=index-10;char topic[96];snprintf(topic,sizeof(topic),"homeassistant/sensor/incubator_%s/photo%u_raw/config",suffix,ch);const int n=snprintf(publishBuffer,sizeof(publishBuffer),R"JSON({"name":"光源%u ADC","unique_id":"incubator_%s_photo%u_raw","state_topic":"%s","value_template":"{{ value_json.photo.channels[%u].raw }}","state_class":"measurement","availability_mode":"all","availability":[{"topic":"%s","payload_available":"online","payload_not_available":"offline"},{"topic":"%s","value_template":"{{ 'online' if value_json.photo.compiled and value_json.photo.channels[%u].valid else 'offline' }}","payload_available":"online","payload_not_available":"offline"}],"device":{"identifiers":["incubator_%s"],"name":"光照培养箱","sw_version":"Connected-2.2.3b"}})JSON",ch,suffix,ch,stateTopic,ch-1,availability,stateTopic,ch-1,suffix);return n>0&&n<int(sizeof(publishBuffer))&&enqueue(topic,publishBuffer,mqttflow::Kind::Discovery,true)>0;}
+  if(index>=11){const unsigned ch=index-10;char topic[96];snprintf(topic,sizeof(topic),"homeassistant/sensor/incubator_%s/photo%u_raw/config",suffix,ch);const int n=snprintf(publishBuffer,sizeof(publishBuffer),R"JSON({"name":"光源%u ADC","unique_id":"incubator_%s_photo%u_raw","state_topic":"%s","value_template":"{{ value_json.photo.channels[%u].raw }}","state_class":"measurement","availability_mode":"all","availability":[{"topic":"%s","payload_available":"online","payload_not_available":"offline"},{"topic":"%s","value_template":"{{ 'online' if value_json.photo.compiled and value_json.photo.channels[%u].valid else 'offline' }}","payload_available":"online","payload_not_available":"offline"}],"device":{"identifiers":["incubator_%s"],"name":"光照培养箱","sw_version":"Connected-2.2.4"}})JSON",ch,suffix,ch,stateTopic,ch-1,availability,stateTopic,ch-1,suffix);return n>0&&n<int(sizeof(publishBuffer))&&enqueue(topic,publishBuffer,mqttflow::Kind::Discovery,true,index+1)>0;}
   const char *components[]={"light","light","sensor","sensor","switch","switch","number","number","switch","number","number"};
   const char *names[]={"光源1","光源2","温度","湿度","运行许可","光源1 PWM","光源1 占空比","光源1 PWM频率","光源2 PWM","光源2 占空比","光源2 PWM频率"};
   const char *objects[]={"light1","light2","temperature","humidity","arm","pwm1","duty1","frequency1","pwm2","duty2","frequency2"};
@@ -136,8 +137,8 @@ bool discover(unsigned index){
   if(index==6||index==7||index==9||index==10){const bool duty=index==6||index==9;
     snprintf(options,sizeof(options),R"JSON("min":%u,"max":%u,"step":1,"mode":"%s","unit_of_measurement":"%s","command_topic":"%s/command/%s","command_template":"{{ value | int }}","state_topic":"%s","value_template":"{{ value_json.%s }}","qos":1,"retain":false,"availability_topic":"%s","payload_available":"online","payload_not_available":"offline")JSON",duty?1:40,duty?99:20000,duty?"slider":"box",duty?"%":"Hz",base,objects[index],stateTopic,objects[index],availability);
   }
-  int n=snprintf(payload,sizeof(payload),R"JSON({"name":"%s","unique_id":"incubator_%s_%s",%s,"device":{"identifiers":["incubator_%s"],"name":"光照培养箱","manufacturer":"DIY","model":"ESP32-C3 SuperMini","sw_version":"Connected-2.2.3b"}})JSON",names[index],suffix,objects[index],options,suffix);
-  return n>0&&static_cast<size_t>(n)<sizeof(payload)&&enqueue(topic,payload,mqttflow::Kind::Discovery,true)>0;
+  int n=snprintf(payload,sizeof(payload),R"JSON({"name":"%s","unique_id":"incubator_%s_%s",%s,"device":{"identifiers":["incubator_%s"],"name":"光照培养箱","manufacturer":"DIY","model":"ESP32-C3 SuperMini","sw_version":"Connected-2.2.4"}})JSON",names[index],suffix,objects[index],options,suffix);
+  return n>0&&static_cast<size_t>(n)<sizeof(payload)&&enqueue(topic,payload,mqttflow::Kind::Discovery,true,index+1)>0;
 }
 bool publishState(const ControlSnapshot&s){struct Sink{char*data;size_t used=0;bool write(const char*p,size_t n){if(used+n>=2048)return false;memcpy(data+used,p,n);used+=n;data[used]=0;return true;}} sink={publishBuffer};char t[20],h[20];decimal::sample(t,sizeof(t),s.temperature,s.sensorValid);decimal::sample(h,sizeof(h),s.humidity,s.sensorValid);jsonstream::Writer<Sink> j(sink);daqjson::emit(j,s,photoView(),eventLogView(),t,h,monoMs());if(j.ok()){const size_t baseSize=sink.used;sink.data[--sink.used]=0;jsonstream::Writer<Sink> u(sink);const auto n=networkView();const auto b=bleView();const auto h=healthView();const auto sj=sampleJournalView();u.raw(",\"sample_journal\":{\"ready\":").boolean(sj.ready).raw(",\"pending\":").number(sj.pending).raw(",\"capacity\":").number(sj.capacity).raw(",\"covered\":").number(sj.covered).raw(",\"thinned\":").number(sj.thinned).raw(",\"interval_ms\":").number(sj.intervalMs).raw(",\"failures\":").number(sj.failures).raw("}").raw(",\"ui\":{\"logic\":").boolean(s.logicPassed).raw(",\"nvs\":").boolean(s.storageReady).raw(",\"heap\":").number(ESP.getFreeHeap()).raw(",\"min\":").number(ESP.getMinFreeHeap()).raw(",\"largest\":").number(ESP.getMaxAllocHeap()).raw(",\"ssid\":").quoted(n.ssid).raw(",\"ip\":").quoted(n.ip).raw(",\"ble\":{\"ready\":").boolean(b.ready).raw(",\"connected\":").boolean(b.connected).raw(",\"secure\":").boolean(b.secure).raw(",\"advertisingPaused\":").boolean(b.advertisingPaused).raw(",\"name\":").quoted(b.name).raw("},\"health\":{\"active\":").number(h.active).raw(",\"latched\":").number(h.latched).raw(",\"lastError\":").quoted(h.lastCommandError).raw("},\"rec\":{\"waiting\":").boolean(s.resumeWaiting).raw(",\"nasWaiting\":").boolean(s.nasWaiting).raw(",\"source\":").quoted(s.recoverySource).raw(",\"outage\":").number(s.estimatedOutageMs).raw(",\"startup\":").number(s.startupWaitMs).raw(",\"sources\":[").quoted(s.channelRecoverySource[0]).raw(",").quoted(s.channelRecoverySource[1]).raw("],\"gaps\":[").number(s.channelGapMs[0]).raw(",").number(s.channelGapMs[1]).raw("],\"outages\":[").number(s.channelOutageMs[0]).raw(",").number(s.channelOutageMs[1]).raw("],\"startups\":[").number(s.channelStartupMs[0]).raw(",").number(s.channelStartupMs[1]).raw("]},\"dailyWaiting\":[").boolean(s.channelDailyWaiting[0]).raw(",").boolean(s.channelDailyWaiting[1]).raw("]}}");if(!u.ok()){sink.used=baseSize;sink.data[baseSize-1]='}';sink.data[baseSize]=0;}}if(!j.ok()||esp_mqtt_client_get_outbox_size(client)>768)return false;// QoS0 requires store=true with ESP-MQTT enqueue; otherwise SDK ignores it.
 return esp_mqtt_client_enqueue(client,stateTopic,publishBuffer,0,0,true,true)>=0;}
@@ -158,9 +159,10 @@ void runProbe(){
   if(Serial)Serial.printf("MQTT_PROBE host=%s port=%u connected=%u elapsed_ms=%lu local_ip=%s gateway=%s rssi=%ld heap_free=%lu heap_largest=%lu\n",active.host,active.port,ok?1:0,static_cast<unsigned long>(elapsed),WiFi.localIP().toString().c_str(),WiFi.gatewayIP().toString().c_str(),static_cast<long>(WiFi.RSSI()),static_cast<unsigned long>(ESP.getFreeHeap()),static_cast<unsigned long>(ESP.getMaxAllocHeap()));
 }
 void releaseClient(const char*reason){
- portENTER_CRITICAL(&viewMux);snprintf(lifecycle.lastStop,sizeof(lifecycle.lastStop),"%s",reason);portEXIT_CRITICAL(&viewMux);
+ const uint32_t stoppedAt=millis(),heap=ESP.getFreeHeap(),largest=ESP.getMaxAllocHeap();
+ portENTER_CRITICAL(&viewMux);snprintf(lifecycle.lastStop,sizeof(lifecycle.lastStop),"%s",reason);lifecycle.stoppedAt=stoppedAt;lifecycle.stopHeap=heap;lifecycle.stopLargest=largest;lifecycle.pendingAge=flow.id?uint32_t(stoppedAt-flow.sentAt):0;portEXIT_CRITICAL(&viewMux);
  if(client){if(!strcmp(reason,"disabled")&&connected.load()&&ESP.getFreeHeap()>12288)esp_mqtt_client_publish(client,availability,"offline",0,0,1);rawmqtt::abort();esp_mqtt_client_stop(client);esp_mqtt_client_destroy(client);client=nullptr;}
- connected.store(false);disconnectedAt=0;lastAck.store(0);flow={};routine={};flow.nextAt=millis();announced=false;discoveryIndex=0;portENTER_CRITICAL(&viewMux);view.outboxBytes=view.inflightId=0;portEXIT_CRITICAL(&viewMux);
+ connected.store(false);disconnectWatch={};lastAck.store(0);announce.store(false);flow={};routine={};session={};flow.nextAt=millis();portENTER_CRITICAL(&viewMux);view.outboxBytes=view.inflightId=0;portEXIT_CRITICAL(&viewMux);
 }
 __attribute__((noinline)) void startClient(){
  const auto net=networkView();if(!net.connected||!net.ip[0]){clientRetryAt=millis()+1000;waitFor("wifi_ip");setReply("WAIT WiFi IP before MQTT startup");return;}networkGeneration=net.generation;
@@ -193,6 +195,17 @@ bool mqttStart(){
 }
 MqttLifecycle mqttLifecycleView(){MqttLifecycle result;portENTER_CRITICAL(&viewMux);result=lifecycle;portEXIT_CRITICAL(&viewMux);return result;}
 MqttView mqttView(){MqttView v;portENTER_CRITICAL(&viewMux);v=view;portEXIT_CRITICAL(&viewMux);v.connected=connected.load();v.nasAlive=mqttNasAlive();v.currentHeap=ESP.getFreeHeap();v.currentLargest=ESP.getMaxAllocHeap();if(!v.connected&&v.enabled){const uint32_t now=millis();v.retryMs=static_cast<int32_t>(clientRetryAt-now)>0?clientRetryAt-now:0;}return v;}
+__attribute__((noinline)) bool mqttDiagnostics(char *reply,size_t size){
+ const auto m=mqttView();const auto life=mqttLifecycleView();const auto io=rawmqtt::failureView();
+ const int n=snprintf(reply,size,
+  "MQTT_DIAG connected=%u nas=%u attempts=%lu outbox=%lu wait=%s retry_ms=%lu heap=%lu min=%lu largest=%lu\n"
+  "STOP reason=%s at_ms=%lu heap=%lu largest=%lu pending_age_ms=%lu creations=%lu memory=%lu ack_timeout=%lu\n"
+  "IO count=%lu stage=%s errno=%d age_ms=%lu duration_ms=%lu requested=%lu sent=%lu rssi=%d heap=%lu largest=%lu",
+  m.connected,m.nasAlive,static_cast<unsigned long>(m.connectionAttempts),static_cast<unsigned long>(m.outboxBytes),m.waitReason[0]?m.waitReason:"none",static_cast<unsigned long>(m.retryMs),static_cast<unsigned long>(m.currentHeap),static_cast<unsigned long>(ESP.getMinFreeHeap()),static_cast<unsigned long>(m.currentLargest),
+  life.lastStop[0]?life.lastStop:"none",static_cast<unsigned long>(life.stoppedAt),static_cast<unsigned long>(life.stopHeap),static_cast<unsigned long>(life.stopLargest),static_cast<unsigned long>(life.pendingAge),static_cast<unsigned long>(life.creations),static_cast<unsigned long>(life.memoryStops),static_cast<unsigned long>(life.ackTimeoutStops),
+  static_cast<unsigned long>(io.count),io.stage[0]?io.stage:"none",io.error,static_cast<unsigned long>(io.count?uint32_t(millis()-io.atMs):0),static_cast<unsigned long>(io.elapsedMs),static_cast<unsigned long>(io.requested),static_cast<unsigned long>(io.sent),io.rssi,static_cast<unsigned long>(io.heap),static_cast<unsigned long>(io.largest));
+ return n>=0&&static_cast<size_t>(n)<size;
+}
 bool mqttConfigure(bool enabled,const char *host,uint16_t port,const char *username,const char *password,char *error,size_t size){
   Config next;portENTER_CRITICAL(&configMux);next=stored;portEXIT_CRITICAL(&configMux);
   if(!host||!username||!password||strlen(host)>=sizeof(next.host)||strlen(username)>=sizeof(next.username)||strlen(password)>=sizeof(next.password)){snprintf(error,size,"ERR MQTT field length");return false;}
@@ -207,32 +220,49 @@ void mqttService(){
  if(changed.exchange(false))applyConfiguration();if(probeRequested.exchange(false))runProbe();const uint32_t now=millis();
  const auto net=networkView();if(client&&(!net.connected||net.generation!=networkGeneration)){releaseClient("network_changed");clientRetryAt=now+1000;waitFor("network_changed");}
  if(active.enabled&&!client&&static_cast<int32_t>(now-clientRetryAt)>=0)startClient();
- if(client&&!connected.load()){if(!disconnectedAt)disconnectedAt=now;if(uint32_t(now-disconnectedAt)>30000){releaseClient("connection_timeout");clientRetryAt=now+45000;waitFor("connection_cooldown");disconnectedAt=0;}}else disconnectedAt=0;
+ const bool online=connected.load();
+ if(online&&session.connected(connectionEpoch.load(),now)){
+  flow.reconnected(now);lastState=0;lastConfig=0;lastConfigState=UINT64_MAX;lastMask=255;
+ }
+ if(online&&announce.exchange(false))session.rediscover(now);
+ // Consume the callback's ACK before testing its deadline. Keep durable ordinals
+ // until a real broker ACK, even if it belongs to the preceding TCP connection.
+ const int ack=lastAck.exchange(0);
+ if(flow.acknowledged(ack)){
+  const auto kind=flow.kind;const uint64_t ordinal=flow.ordinal;const uint32_t epoch=flow.epoch;
+  flow.succeeded(now);portENTER_CRITICAL(&viewMux);view.inflightId=0;portEXIT_CRITICAL(&viewMux);
+  if(kind==mqttflow::Kind::Record&&ordinal)eventAck(ordinal);
+  session.acknowledged(kind,ordinal,epoch,now);
+ }
+ if(client&&disconnectWatch.expired(online,now)){releaseClient("connection_timeout");clientRetryAt=millis()+45000;waitFor("connection_cooldown");return;}
  if(client){int bytes=esp_mqtt_client_get_outbox_size(client);portENTER_CRITICAL(&viewMux);view.outboxBytes=bytes>0?bytes:0;portEXIT_CRITICAL(&viewMux);}
+ const bool memoryLow=client&&netbudget::low(ESP.getFreeHeap(),ESP.getMaxAllocHeap()),ackExpired=client&&flow.timeout(now,online,ack);
+ if(memoryLow||ackExpired){portENTER_CRITICAL(&viewMux);if(memoryLow)++lifecycle.memoryStops;if(ackExpired)++lifecycle.ackTimeoutStops;portEXIT_CRITICAL(&viewMux);releaseClient(memoryLow?"low_memory":"puback_timeout");clientRetryAt=millis()+30000;waitFor(memoryLow?"memory_cooldown":"ack_cooldown",netbudget::MQTT_START_HEAP,netbudget::MQTT_TASK_STACK);setReply(memoryLow?"WAIT MQTT low memory; released client, retry after30s":"WAIT MQTT PUBACK timeout; released client, retry after30s");portENTER_CRITICAL(&viewMux);++view.memoryDeferrals;portEXIT_CRITICAL(&viewMux);return;}
+ if(!online)return;
  const auto s=controlSnapshot();
- const bool memoryLow=client&&(netbudget::low(ESP.getFreeHeap(),ESP.getMaxAllocHeap())),ackExpired=client&&flow.expired(now);
- if(memoryLow||ackExpired){portENTER_CRITICAL(&viewMux);if(memoryLow)++lifecycle.memoryStops;if(ackExpired)++lifecycle.ackTimeoutStops;portEXIT_CRITICAL(&viewMux);releaseClient(memoryLow?"low_memory":"puback_timeout");clientRetryAt=now+30000;waitFor(memoryLow?"memory_cooldown":"ack_cooldown",netbudget::MQTT_START_HEAP,netbudget::MQTT_TASK_STACK);setReply(memoryLow?"WAIT MQTT low memory; released client, retry after30s":"WAIT MQTT PUBACK timeout; released client, retry after30s");portENTER_CRITICAL(&viewMux);++view.memoryDeferrals;portEXIT_CRITICAL(&viewMux);return;}
- int ack=lastAck.exchange(0);if(flow.acknowledged(ack)){auto kind=flow.kind;uint64_t ordinal=flow.ordinal;bool sameEpoch=flow.epoch==connectionEpoch.load();flow.succeeded(now);portENTER_CRITICAL(&viewMux);view.inflightId=0;portEXIT_CRITICAL(&viewMux);if(kind==mqttflow::Kind::Record&&ordinal)eventAck(ordinal);else if(kind==mqttflow::Kind::Discovery&&sameEpoch)++discoveryIndex;else if(kind==mqttflow::Kind::Availability&&sameEpoch)announced=true;}
- if(!connected.load())return;if(announce.exchange(false)){discoveryIndex=0;announced=false;lastState=0;lastConfig=0;lastConfigState=UINT64_MAX;lastMask=255;}
  if(remoteReady.load()&&ESP.getFreeHeap()>=16384&&ESP.getMaxAllocHeap()>=4096){publishRemoteReply();}
- if(announced&&static_cast<uint32_t>(now-lastState)>=(photoView().automatic.active?5000:2000)&&ESP.getFreeHeap()>=16384&&ESP.getMaxAllocHeap()>=4096){if(publishState(s))lastState=now;}
+ // Live QoS0 state does not wait for discovery, or for a preceding QoS1 PUBACK.
+ // This also lets NAS validate its heartbeat during a short recovered connection.
+ if((session.statePending||static_cast<uint32_t>(now-lastState)>=(photoView().automatic.active?5000:2000))&&ESP.getFreeHeap()>=16384&&ESP.getMaxAllocHeap()>=4096){if(publishState(s)){lastState=now;session.statePending=false;}}
  if(flow.id||static_cast<int32_t>(now-flow.nextAt)<0)return;
  if(ESP.getFreeHeap()<8192||ESP.getMaxAllocHeap()<2048){flow.nextAt=now+1000;portENTER_CRITICAL(&viewMux);++view.memoryDeferrals;portEXIT_CRITICAL(&viewMux);return;}
+ const uint64_t configState=uint64_t(s.config[0].frequency)|(uint64_t(s.config[0].duty)<<15)|(uint64_t(s.config[0].pwm)<<22)|(uint64_t(s.config[1].frequency)<<23)|(uint64_t(s.config[1].duty)<<38)|(uint64_t(s.config[1].pwm)<<45);
+ const bool configDue=s.configRevision!=lastConfig||configState!=lastConfigState;
+ const auto bootstrap=session.bootstrap(configDue);
+ if(bootstrap==mqttflow::Kind::Availability){enqueue(availability,"online",mqttflow::Kind::Availability,true);return;}
+ if(bootstrap==mqttflow::Kind::Config){if(publishConfig(s)){lastConfig=s.configRevision;lastConfigState=configState;}return;}
  if(s.nasWaiting){if(!lastRecoveryRequest||static_cast<uint32_t>(now-lastRecoveryRequest)>=2000){if(requestRecovery(s))lastRecoveryRequest=now;}return;}
- if(!announced){if(discoveryIndex<DISCOVERY_COUNT){discover(discoveryIndex);return;}enqueue(availability,"online",mqttflow::Kind::Availability,true);return;}
- const uint64_t configState=uint64_t(s.config[0].frequency)|(uint64_t(s.config[0].duty)<<15)|(uint64_t(s.config[0].pwm)<<22)|(uint64_t(s.config[1].frequency)<<23)|(uint64_t(s.config[1].duty)<<38)|(uint64_t(s.config[1].pwm)<<45);if(s.configRevision!=lastConfig||configState!=lastConfigState){if(publishConfig(s)){lastConfig=s.configRevision;lastConfigState=configState;}return;}AnalysisCommand command={};if(analysisQueue&&xQueuePeek(analysisQueue,&command,0)==pdTRUE){char topic[64];snprintf(topic,sizeof(topic),"%s/analysis/command",base);if(enqueue(topic,command.json,mqttflow::Kind::AnalysisCommand,false)>0)xQueueReceive(analysisQueue,&command,0);return;}
- uint32_t current=s.output[0]|(s.output[1]<<1)|(s.armed<<2)|(s.sensorValid<<3);current=current*31+s.config[0].frequency+s.config[0].duty*20001UL+s.config[0].pwm;current=current*31+s.config[1].frequency+s.config[1].duty*20001UL+s.config[1].pwm;
- if(s.sensorValid)current=current*31+static_cast<uint32_t>((s.temperature+100)*10)+static_cast<uint32_t>(s.humidity*10);
+ AnalysisCommand command={};if(analysisQueue&&xQueuePeek(analysisQueue,&command,0)==pdTRUE){char topic[64];snprintf(topic,sizeof(topic),"%s/analysis/command",base);if(enqueue(topic,command.json,mqttflow::Kind::AnalysisCommand,false)>0)xQueueReceive(analysisQueue,&command,0);return;}
  const uint8_t mask=(s.cycleRunning[0]?1:0)|(s.cycleRunning[1]?2:0);const bool progressDue=mask!=lastMask||(s.nasRecoveryEnabled&&mask&&static_cast<uint32_t>(now-lastProgress)>=2000);
- const bool stateDue=false;
  const auto logs=eventLogView();bool recordDue=logs.ready&&logs.pending&&static_cast<uint32_t>(now-lastAttempt)>=500;
  static uint32_t lastSampleSend=0;bool sampleDue=mqttNasAlive()&&sampleJournalView().pending&&uint32_t(now-lastSampleSend)>=1000;
- for(uint8_t attempt=0;attempt<3;++attempt){
-  const auto kind=routine.choose(progressDue,stateDue,recordDue,sampleDue);
+ const bool discoveryDue=session.discoveryDue(now);
+ for(uint8_t attempt=0;attempt<4;++attempt){
+  const auto kind=routine.choose(progressDue,false,recordDue,sampleDue,discoveryDue);
   if(kind==mqttflow::Kind::Progress){if(publishProgress(s)){lastProgress=now;lastMask=mask;routine.accepted(kind);}return;}
-  if(kind==mqttflow::Kind::State){if(publishState(s)){lastState=now;signature=current;routine.accepted(kind);}return;}
   if(kind==mqttflow::Kind::Sample){if(sampleJournalJson(publishBuffer,sizeof(publishBuffer))){char topic[64];snprintf(topic,sizeof(topic),"%s/samples",base);if(enqueue(topic,publishBuffer,mqttflow::Kind::Sample,false)>0){lastSampleSend=now;routine.accepted(kind);}return;}sampleDue=false;continue;}
   if(kind==mqttflow::Kind::Record){const int id=publishRecord(now);if(id>0){routine.accepted(kind);return;}if(id<0)return;recordDue=false;continue;}
+  if(kind==mqttflow::Kind::Discovery){if(discover(session.discoveryIndex))routine.accepted(kind);return;}
   return;
  }
 }

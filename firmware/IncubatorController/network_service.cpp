@@ -135,7 +135,7 @@ void entryState(){
  controlRead(httpSnapshot);const bool wifi=WiFi.status()==WL_CONNECTED;
  const String ssid=wifi?WiFi.SSID():String(""),ip=wifi?WiFi.localIP().toString():String("");
  jsonstream::Buffer<512> buffer;jsonstream::Writer<jsonstream::Buffer<512>> body(buffer);
- entrystate::emit(body,"Connected-2.2.3b",csrf.c_str(),httpSnapshot.clockText,ssid.c_str(),ip.c_str(),wifi,mqttNasAlive());
+ entrystate::emit(body,"Connected-2.2.4",csrf.c_str(),httpSnapshot.clockText,ssid.c_str(),ip.c_str(),wifi,mqttNasAlive());
  if(!body.ok()){response(503,false,"ERR entry state exceeds bounded response size");return;}
  headers();server.setContentLength(buffer.count);server.send(200,"application/json; charset=utf-8","");
  NetworkClient client=server.client();if(!sendBody(client,reinterpret_cast<const uint8_t*>(buffer.data),buffer.count,1000))++responseWriteFailures;

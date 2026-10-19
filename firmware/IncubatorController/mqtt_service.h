@@ -10,7 +10,7 @@ struct MqttView {
   char waitReason[24];
   char host[97], username[33], lastReply[96];
 };
-struct MqttLifecycle {uint32_t creations,memoryStops,ackTimeoutStops;char lastStop[24];};
+struct MqttLifecycle {uint32_t creations,memoryStops,ackTimeoutStops,stoppedAt,stopHeap,stopLargest,pendingAge;char lastStop[24];};
 MqttLifecycle mqttLifecycleView();
 bool mqttStart();
 void mqttService();
@@ -22,3 +22,6 @@ void mqttRequestProbe();
 
 bool mqttAnalysisCommand(const char*json);
 bool mqttNasAlive();
+
+// Read-only diagnostic text, shared by authenticated BLE and USB command paths.
+bool mqttDiagnostics(char *reply,size_t size);
