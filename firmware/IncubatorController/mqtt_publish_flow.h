@@ -16,14 +16,14 @@ struct RoutineScheduler {
   if(kind==Kind::Progress)turn=1;else if(kind==Kind::State)turn=2;else if(kind==Kind::Record)turn=3;else if(kind==Kind::Sample)turn=4;else if(kind==Kind::Discovery)turn=0;
  }
 };
-struct Flow {Kind kind=Kind::None;int id=0;uint64_t ordinal=0;uint32_t sentAt=0,nextAt=0,epoch=0,retryMs=500;
+struct Flow {Kind kind=Kind::None;int id=0;uint64_t ordinal=0;uint32_t sentAt=0,acceptedAt=0,nextAt=0,epoch=0,retryMs=500;
  constexpr bool ready(uint32_t now,uint32_t free,uint32_t largest,uint32_t outbox)const{return id==0&&static_cast<int32_t>(now-nextAt)>=0&&free>=8192&&largest>=2048&&outbox==0;}
- constexpr void accepted(int message,Kind k,uint64_t order,uint32_t now,uint32_t generation){id=message;kind=k;ordinal=order;sentAt=now;epoch=generation;retryMs=500;}
+ constexpr void accepted(int message,Kind k,uint64_t order,uint32_t now,uint32_t generation){id=message;kind=k;ordinal=order;sentAt=acceptedAt=now;epoch=generation;retryMs=500;}
  constexpr bool acknowledged(int message)const{return id>0&&message==id;}
  constexpr void clear(){id=0;kind=Kind::None;ordinal=0;}
  constexpr void succeeded(uint32_t now){clear();nextAt=now+200;retryMs=500;}
  constexpr void failed(uint32_t now){nextAt=now+retryMs;if(retryMs<30000)retryMs=retryMs>15000?30000:retryMs*2;}
- constexpr bool expired(uint32_t now)const{return id>0&&static_cast<uint32_t>(now-sentAt)>=30000;}
+ constexpr bool expired(uint32_t now)const{return id>0&&(static_cast<uint32_t>(now-sentAt)>=30000||static_cast<uint32_t>(now-acceptedAt)>=180000);}
  // A reconnect does not acknowledge or discard a durable record. Its retransmission
  // gets a full ACK window; the original epoch still identifies stale bootstrap ACKs.
  constexpr void reconnected(uint32_t now){if(id>0)sentAt=now;}

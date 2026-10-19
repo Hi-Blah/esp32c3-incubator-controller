@@ -20,6 +20,13 @@ constexpr bool retransmittedRecord(){
  return !s.announced&&f.ordinal==123;
 }
 static_assert(retransmittedRecord(),"Reconnect retains a record until ACK, without accepting stale online ACKs");
+constexpr bool flappingIsBounded(){
+ Flow f;f.accepted(5,Kind::Record,77,0,1);
+ for(uint32_t now=20000;now<180000;now+=20000){f.reconnected(now);if(f.timeout(now,true,0))return false;}
+ f.reconnected(180000);
+ return f.timeout(180000,true,0)&&!f.timeout(180000,true,5)&&f.ordinal==77;
+}
+static_assert(flappingIsBounded(),"Repeated short connections cannot postpone an unacknowledged packet forever");
 constexpr bool shortConnections(){
  Session s;
  // Only one discovery packet fits each connection, while live/bootstrap data
