@@ -1,5 +1,16 @@
 # Acceptance, limits and troubleshooting
 
+## Connected-2.2.4: initial hardware observation
+
+Reported on **2026-10-22**: after flashing Connected-2.2.4, the maintainer observed over ten minutes of stable operation with no issue reported. The exact duration was not recorded. This is user-reported initial hardware validation, not a long-duration stability claim or confirmation that every earlier disconnection has been resolved.
+
+- Complete firmware compilation/linking: [passed](https://github.com/Hi-Blah/esp32c3-incubator-controller/actions/runs/39282694021).
+- Source/backend/native logic CI at the documentation head: [passed](https://github.com/Hi-Blah/esp32c3-incubator-controller/actions/runs/39284414746).
+- Working pair: Connected-2.2.4 and NAS-Recorder-2.2.3a; no further NAS migration is required for this firmware change.
+- Still to validate: extended uptime, repeated broker/router/recorder outages, Flash sample replay/deduplication and controlled restarts under the intended wiring and load. Features not explicitly reported tested are not inferred to have passed.
+
+Changes and diagnostic command: [2.2.4 notes](../docs/firmware-2.2.4.md). The earlier prototype observations and broader acceptance matrix remain below.
+
 The prototype reference pair is Connected-2.2.2 plus cumulative NAS-Recorder-2.2.2c. Reference checks covered HA data/control, NAS records/CSV, NAS-assisted restart recovery and delivered optical-fault mail. This is a prototype acceptance report, not an endurance or safety certification.
 
 Connected-2.2.3 adds the journal and reproducible build layout. Automated checks are recorded separately in docs/verification.md. Hardware acceptance is pending until these checks are performed on the actual intended wiring/load:

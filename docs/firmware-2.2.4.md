@@ -2,7 +2,7 @@
 
 [中文](firmware-2.2.4-zh-CN.md)
 
-This candidate combines the [2.2.3b local HTTP fixes](firmware-2.2.3b.md) with targeted MQTT reconnection changes. Keep NAS-Recorder-2.2.3a and existing Compose, credentials, ACL and database files. No partition, NVS schema, topic or recorder migration is required. Hardware acceptance is pending.
+This candidate combines the [2.2.3b local HTTP fixes](firmware-2.2.3b.md) with targeted MQTT reconnection changes. Keep NAS-Recorder-2.2.3a and existing Compose, credentials, ACL and database files. No partition, NVS schema, topic or recorder migration is required. Initial hardware validation was reported on 2026-10-22: over ten minutes of stable operation after flashing, with no issue reported. Complete firmware CI and source/backend checks have passed. Extended acceptance remains pending; see the [validation record](../wiki/Validation.md).
 
 ## Evidence and scope
 

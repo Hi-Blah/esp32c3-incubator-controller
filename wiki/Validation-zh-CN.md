@@ -1,5 +1,16 @@
 # 验收、限制与排错
 
+## Connected-2.2.4：初步实机观察
+
+**2026-10-22反馈**：维护者刷入Connected-2.2.4后，平稳运行十几分钟，暂未发现问题；未记录精确时长。现登记为用户反馈的初步实机验证通过，不据此认定已经长期稳定，也不推定所有历史断联问题均已解决。
+
+- 完整固件编译及链接：[已通过](https://github.com/Hi-Blah/esp32c3-incubator-controller/actions/runs/39282694021)。
+- 文档更新前源码的后端及原生逻辑CI：[已通过](https://github.com/Hi-Blah/esp32c3-incubator-controller/actions/runs/39284414746)。
+- 当前组合：Connected-2.2.4与NAS-Recorder-2.2.3a；本次固件升级无需再迁移NAS。
+- 仍待验收：长时间运行、多轮broker/路由器/记录器断联、Flash样本补传与去重，以及实际接线和负载下的受控重启。未明确反馈测试过的功能不自动视为已通过。
+
+改动及诊断命令见[2.2.4说明](../docs/firmware-2.2.4-zh-CN.md)。此前的原型观察和完整验收清单保留在下方。
+
 原型参考组合为 Connected-2.2.2 和累计 NAS-Recorder-2.2.2c。已观察到 HA 数据/控制正常、NAS 记录及 CSV、NAS 辅助重启恢复，以及光照异常邮件实际送达。这是原型使用验收，不是长期寿命或安全认证。
 
 Connected-2.2.3 新增缓存及可复现构建布局。自动检查单列于 docs/verification.md；下列项目仍需在实际接线和负载上完成，才能把本次迭代改为稳定版：

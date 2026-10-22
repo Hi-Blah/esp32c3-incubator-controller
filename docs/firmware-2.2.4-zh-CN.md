@@ -2,7 +2,7 @@
 
 [English](firmware-2.2.4.md)
 
-本候选版合并 [2.2.3b 的本机网页修复](firmware-2.2.3b-zh-CN.md)，并修正 MQTT 恢复流程。NAS 沿用 NAS-Recorder-2.2.3a，现有 Compose、密码、ACL 和数据库不需要修改。无需更改分区、清空 NVS 或迁移记录。尚待实机验收。
+本候选版合并 [2.2.3b 的本机网页修复](firmware-2.2.3b-zh-CN.md)，并修正 MQTT 恢复流程。NAS 沿用 NAS-Recorder-2.2.3a，现有 Compose、密码、ACL 和数据库不需要修改。无需更改分区、清空 NVS 或迁移记录。2026-10-22已收到初步实机反馈：刷入后平稳运行十几分钟，暂未发现问题。完整固件CI及源码/后端检查也已通过；长时间验收仍待完成，详见[验证记录](../wiki/Validation-zh-CN.md)。
 
 ## 证据与边界
 

@@ -6,6 +6,14 @@ Versioned source packages and their independent installation guides are listed b
 
 See [all downloads](archive/README.md) / [全部下载](archive/README.zh-CN.md).
 
+## Current validation / 当前验证
+
+**2026-10-22 — Connected-2.2.4 + NAS-Recorder-2.2.3a:** complete firmware build and source/backend CI passed. The maintainer reported over ten minutes of stable hardware operation after flashing, with no issue observed. Marked as initial hardware validation; extended uptime, outage recovery and replay validation remain pending.
+
+**2026-10-22 — Connected-2.2.4 + NAS-Recorder-2.2.3a：** 完整固件构建及源码/后端CI已通过。维护者反馈刷入后平稳运行十几分钟，暂未发现问题。标记为初步实机验证通过，长时间运行、断联恢复及补传验收仍待完成。
+
+Details / 详情：[English](docs/firmware-2.2.4.md) / [中文](docs/firmware-2.2.4-zh-CN.md)。
+
 ## Firmware / 固件
 
 | Version | Main changes / 主要内容 | Limitations / 限制 |
@@ -34,7 +42,9 @@ See [all downloads](archive/README.md) / [全部下载](archive/README.zh-CN.md)
 | [HardwareCheck-unversioned](archive/firmware/HardwareCheck-unversioned/README.md) | Early hardware/local control example. / 早期硬件或本地控制示例。 | Unversioned example; inspect its own source and pin map. / 未编号示例，按其源码和针脚表使用。 |
 | [IncubatorBasic-unversioned](archive/firmware/IncubatorBasic-unversioned/README.md) | Early hardware/local control example. / 早期硬件或本地控制示例。 | Unversioned example; inspect its own source and pin map. / 未编号示例，按其源码和针脚表使用。 |
 | [IncubatorWiFiNtpRetry-unversioned](archive/firmware/IncubatorWiFiNtpRetry-unversioned/README.md) | Early hardware/local control example. / 早期硬件或本地控制示例。 | Unversioned example; inspect its own source and pin map. / 未编号示例，按其源码和针脚表使用。 |
-| [Connected-2.2.3](archive/firmware/Connected-2.2.3/README.md) | Adaptive Flash journal, NAS clock and durable sample receipts. / 自适应 Flash 缓存、NAS 校时及采样入库回执。 | Candidate; automated checks passed, hardware acceptance pending. / 候选版，自动检查通过，实机验收待完成。 |
+| [Connected-2.2.3](archive/firmware/Connected-2.2.3/README.md) | Adaptive Flash journal, NAS clock and durable sample receipts. / 自适应 Flash 缓存、NAS 校时及采样入库回执。 | Historical; recorder stalls and device HTTP/MQTT recovery issues were reported. See 2.2.3a/2.2.4. / 历史版本，有记录器堵塞及本机网页/MQTT恢复问题报告，参见2.2.3a/2.2.4。 |
+| [Connected-2.2.3b](docs/firmware-2.2.3b.md) | Local HTTP resource handling; integrated into 2.2.4. / 本机网页资源处理，已合入2.2.4。 | Development hotfix candidate; not independently hardware-accepted. / 开发修复候选版，未单独实机验收。 |
+| [Connected-2.2.4](docs/firmware-2.2.4.md) | Reconnect ACK handling, live data before background discovery and BLE diagnostics, including 2.2.3b web fixes. / 重连确认处理、优先实时数据、蓝牙诊断，含2.2.3b网页修复。 | CI passed; initial hardware observation over ten minutes passed on 2026-10-22; extended validation pending. / CI通过；2026-10-22十几分钟初步实机观察通过，长期验收待完成。 |
 
 ## NAS recorder / NAS 记录器
 
@@ -50,5 +60,7 @@ See [all downloads](archive/README.md) / [全部下载](archive/README.zh-CN.md)
 | [NAS-Recorder-2.2.2b](archive/nas/NAS-Recorder-2.2.2b/README.md) | Includes manual-ON optical alarms and notification UI fixes; SMTP delivery issue remained. / 包含手动开灯无光报警和通知界面修复，SMTP 投递问题尚未修复。 | Cumulative source; use an isolated database for historical comparisons. / 累计源码，历史对照须使用独立数据库。 |
 | [NAS-Recorder-2.2.2c](archive/nas/NAS-Recorder-2.2.2c/README.md) | Cumulative a/b/c code, including SMTP envelope/body submission fixes. / 累计包含 a/b/c 修复，包括 SMTP 信封与正文投递。 | Cumulative source; use an isolated database for historical comparisons. / 累计源码，历史对照须使用独立数据库。 |
 | [NAS-Recorder-2.2.3](archive/nas/NAS-Recorder-2.2.3/README.md) | Adds durable sample receipts, historical backfill and >180-second disconnect notices. / 新增采样入库回执、历史补传和超过 180 秒断联提示。 | Cumulative source; use an isolated database for historical comparisons. / 累计源码，历史对照须使用独立数据库。 |
+
+[NAS-Recorder-2.2.3a](docs/nas-2.2.3a.md) bounds clock repair work to avoid recorder database stalls; it remains the current NAS line used with firmware 2.2.4. / NAS-Recorder-2.2.3a限制时间回填工作量，修正记录器数据库堵塞，仍为2.2.4配套的现役NAS版本。
 
 Current acceptance scope: [English](wiki/Validation.md) / [中文](wiki/Validation-zh-CN.md).

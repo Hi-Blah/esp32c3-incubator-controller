@@ -1,10 +1,21 @@
 {
   "firmware": "Connected-2.2.4",
   "nas": "NAS-Recorder-2.2.3a",
-  "status": "candidate; hardware acceptance pending",
+  "status": "initial hardware smoke test passed; extended validation pending",
   "baseline": {
     "firmware": "Connected-2.2.3",
     "nas": "NAS-Recorder-2.2.2c"
   },
-  "license": "not selected"
+  "license": "not selected",
+  "validation": {
+    "reported_on": "2026-10-22",
+    "source": "maintainer-reported hardware observation",
+    "duration": "over ten minutes; exact duration not recorded",
+    "result": "no issue reported during this initial observation",
+    "extended_validation": "pending",
+    "firmware_ci_commit": "44951c9ee1ae55c6beefca36311bf979bf0ebecc",
+    "firmware_ci": "passed",
+    "source_checks_commit": "098c82e35900435ebbb717e7a62e59aeb04739e5",
+    "source_checks": "passed"
+  }
 }
