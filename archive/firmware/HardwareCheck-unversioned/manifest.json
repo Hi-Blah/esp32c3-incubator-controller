@@ -36,9 +36,15 @@
   },
   "files": {
     "HardwareCheck/HardwareCheck.ino": "d9ea4406dd14514203a1fedcb79bb35619590150a7ef6dae0254e21375e1d3f0",
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "dbfac2f025dac2292ff4d472a560979f8c8c5fca19817bb6137206d34aa87220",
-    "README.zh-CN.md": "603a0a66b468f0922f9190b89b90c109bda97d4040ea1cf1597f65bce1c8d258",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "67511463960c7c00325a33ea3d2d1752af4cb17cf17ae980d1d87f14d21099f8",
+    "README.zh-CN.md": "0675e42710533550145ee94086190003c0d33f77bf4164bfdb9e30023f607a9e",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }

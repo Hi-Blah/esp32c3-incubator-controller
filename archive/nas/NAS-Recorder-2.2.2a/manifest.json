@@ -22,9 +22,12 @@
     "note_zh": "包含配置主题、ACL 和控制网关修复。"
   },
   "files": {
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "8ffebf5ae3fdd358bb7dd20ff705ee1c0130e59349e78a18660ff920efc47fcb",
-    "README.zh-CN.md": "71d1b752061d3622b5b424e030ed315bfcd20241c19e7aa0b53ca13685dc5ae7",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "e0981758d5d2a865bb7213a1e12d8b48fdc057111a2f1aa2214962eef6906c50",
+    "README.zh-CN.md": "1c5f045617f262b7b1ba5c8122077552b48606d9196bc8d90a1fb01331f40ed7",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "mqtt/config/acl.archive.example": "4dfbd7853fbe27a63a4e89e7fb27c7b2a7330b8ed439f97ad01696cc10c9ffe7",
     "recorder/.dockerignore": "148e9182701d85e79b2f232af77c30f4ba39837fdf28fffaef7a59932d1ceb41",
     "recorder/.env.example": "f5f547b4f8cffeb618dd7df4b636ea6ed55aa4c841877166904ed2a4722ae838",
@@ -76,5 +79,8 @@
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/RECORD": "f6d313f5d09b601880756182ba4e9e2b8707a52c6cac7ef15dedad4daca7ce70",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/WHEEL": "cc431c46bf4aaf4df1d68cc6c20e6ff4d4012a7de49dda7a2d2a1295583e8e15",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/licenses/LICENSE.txt": "66408b049249c3bdb0ba1ed285f5422ce67e371d40151bebd4d806af454ffe7c"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }

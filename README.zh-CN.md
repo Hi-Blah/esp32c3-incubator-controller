@@ -4,7 +4,7 @@
 
 用于实验培养箱的双路独立光照控制、传感器采集、Home Assistant 接入及 NAS 长期记录。开发板执行本地定时和采集；NAS 负责历史存储、光反馈判定、PWM 标定模型及邮件通知。
 
-**当前源码为 Connected-2.2.4 + NAS-Recorder-2.2.3a。** 完整固件 CI 与源码/后端检查已通过。2026-10-22，维护者反馈刷入2.2.4后平稳运行十几分钟，暂未发现问题，现登记为“初步实机验证通过”；长时间运行、反复断联和补传验收仍待完成。详见[固件改动](docs/firmware-2.2.4-zh-CN.md)、[记录器改动](docs/nas-2.2.3a-zh-CN.md)及[验证清单](wiki/Validation-zh-CN.md)。项目许可证暂未选择，见[许可证状态](LICENSE-STATUS.md)。
+**当前源码为 Connected-2.2.4 + NAS-Recorder-2.2.3a。** 完整固件 CI 与源码/后端检查已通过。2026-10-22，维护者反馈刷入2.2.4后平稳运行十几分钟，暂未发现问题，现登记为“初步实机验证通过”；长时间运行、反复断联和补传验收仍待完成。详见[固件改动](docs/firmware-2.2.4-zh-CN.md)、[记录器改动](docs/nas-2.2.3a-zh-CN.md)及[验证清单](wiki/Validation-zh-CN.md)。项目原创代码、文档和接线图采用[Apache-2.0许可证](LICENSE)，详见[适用范围](LICENSE-STATUS.md)与[第三方声明](THIRD_PARTY_NOTICES.md)。
 
 ## 已实现功能
 

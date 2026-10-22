@@ -1,6 +1,8 @@
 # Contributing / 参与开发
 
-A project license is pending. Discuss proposed changes before redistributing project code.
+Project-original material is licensed under Apache-2.0. Unless explicitly stated otherwise, contributions intentionally submitted for inclusion are provided under the same license. Preserve third-party copyright and license notices.
+
+项目原创内容采用Apache-2.0；除非另有明确声明，为纳入项目而主动提交的贡献按相同许可证提供。保留第三方版权和许可声明。
 
 Report the firmware and NAS versions, board/module types, build options, reproduction steps and a minimal sanitized status/diagnostic excerpt. Remove Wi-Fi/MQTT/SMTP credentials, complete flash dumps, private IPs, email addresses and experimental subject data.
 

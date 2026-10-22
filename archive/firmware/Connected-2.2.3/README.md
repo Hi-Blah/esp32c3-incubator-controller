@@ -64,4 +64,4 @@ Suggested companion: NAS-Recorder-2.2.3. MQTT-enabled releases require an explic
 
 ## Validation and license
 
-Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Candidate; automated checks passed, hardware acceptance pending. Project license is not assigned; third-party licenses retain their terms. Build evidence: GitHub Actions run 38764385345.
+Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Candidate; automated checks passed, hardware acceptance pending. Project-original code is licensed under Apache-2.0; third-party licenses retain their terms. Build evidence: GitHub Actions run 38764385345.

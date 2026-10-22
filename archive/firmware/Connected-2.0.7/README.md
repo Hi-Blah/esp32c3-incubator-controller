@@ -47,4 +47,4 @@ Suggested companion: NAS-Recorder-2.0.7. MQTT-enabled releases require an explic
 
 ## Validation and license
 
-Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Early recorder protocol; no optical ADC feedback yet. Project license is not assigned; third-party licenses retain their terms. 
+Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Early recorder protocol; no optical ADC feedback yet. Project-original code is licensed under Apache-2.0; third-party licenses retain their terms. 

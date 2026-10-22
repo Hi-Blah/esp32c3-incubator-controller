@@ -11,7 +11,7 @@ Each ZIP is a source package with its own English/Chinese installation guide, ex
 
 Download the ZIP directly from the table. If GitHub opens a file page, choose Download raw file. Extract to a new directory and start with the README inside that ZIP. Check SHA256 against [catalog.json](catalog.json) or [SHA256SUMS.txt](SHA256SUMS.txt). Do not mix an old sketch with current headers or point an old recorder at a current production database. The a/b/c NAS archives are cumulative complete source sets; separate prerequisite patch packages are not required.
 
-Configuration examples use documentation endpoints and an example device ID. Configure real endpoints and credentials through the selected version's supported interface. Runtime behavior and pin layout remain version-specific. Historical compressed UI assets have been regenerated from their adjacent source; identity-test vectors are synthetic. Third-party licenses accompany the dependencies. Project-wide licensing is [not yet assigned](../LICENSE-STATUS.md).
+Configuration examples use documentation endpoints and an example device ID. Configure real endpoints and credentials through the selected version's supported interface. Runtime behavior and pin layout remain version-specific. Historical compressed UI assets have been regenerated from their adjacent source; identity-test vectors are synthetic. Third-party licenses accompany the dependencies. Project-original material is licensed under [Apache-2.0](../LICENSE); see [license scope](../LICENSE-STATUS.md).
 
 ## Firmware
 

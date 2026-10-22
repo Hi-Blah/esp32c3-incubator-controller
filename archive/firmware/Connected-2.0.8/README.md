@@ -53,4 +53,4 @@ Suggested companion: NAS-Recorder-2.0.8. MQTT-enabled releases require an explic
 
 ## Validation and license
 
-Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Historical memory/network limits and queue backlog remained. Project license is not assigned; third-party licenses retain their terms. 
+Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Historical memory/network limits and queue backlog remained. Project-original code is licensed under Apache-2.0; third-party licenses retain their terms. 

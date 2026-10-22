@@ -53,4 +53,4 @@ Suggested companion: none. MQTT-enabled releases require an explicitly configure
 
 ## Validation and license
 
-Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Unversioned early example. Project license is not assigned; third-party licenses retain their terms. 
+Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Unversioned early example. Project-original code is licensed under Apache-2.0; third-party licenses retain their terms. 

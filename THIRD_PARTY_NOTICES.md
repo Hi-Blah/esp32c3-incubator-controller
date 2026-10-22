@@ -1,6 +1,6 @@
 # Third-party notices
 
-Project license selection does not replace these third-party licenses.
+Project-original material is licensed under Apache-2.0. This does not replace or relicense the third-party components below; their own license and attribution requirements remain in effect.
 
 | Component | Version / use | License and source |
 |---|---|---|

@@ -55,4 +55,4 @@ Suggested companion: NAS-Recorder-2.2.2c. MQTT-enabled releases require an expli
 
 ## Validation and license
 
-Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Prototype reference release with NAS 2.2.2c; no raw Flash sensor journal. Project license is not assigned; third-party licenses retain their terms. 
+Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: Prototype reference release with NAS 2.2.2c; no raw Flash sensor journal. Project-original code is licensed under Apache-2.0; third-party licenses retain their terms. 

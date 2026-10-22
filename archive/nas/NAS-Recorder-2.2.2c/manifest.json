@@ -24,9 +24,12 @@
     "note_zh": "累计包含 a/b/c 修复，包括 SMTP 信封与正文投递。"
   },
   "files": {
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "d9d478a972ce53b00354255a453ec9576da3afeb6b31761cfc32a6886f9a8260",
-    "README.zh-CN.md": "376e1285aefd6a4407289f59645860b8c349450e6c920daa13fe77651c73b746",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "a8d80c4ee1ffa47ddeaa0644dae517dc5d2d7c1ba93c12886a90240cf91df29e",
+    "README.zh-CN.md": "70a3ba6feff000f1dd8b99101f2dc3567fa11f34ef2e416f368734c06104d74e",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "mqtt/config/acl.archive.example": "4dfbd7853fbe27a63a4e89e7fb27c7b2a7330b8ed439f97ad01696cc10c9ffe7",
     "recorder/.dockerignore": "148e9182701d85e79b2f232af77c30f4ba39837fdf28fffaef7a59932d1ceb41",
     "recorder/.env.example": "f5f547b4f8cffeb618dd7df4b636ea6ed55aa4c841877166904ed2a4722ae838",
@@ -80,5 +83,8 @@
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/RECORD": "f6d313f5d09b601880756182ba4e9e2b8707a52c6cac7ef15dedad4daca7ce70",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/WHEEL": "cc431c46bf4aaf4df1d68cc6c20e6ff4d4012a7de49dda7a2d2a1295583e8e15",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/licenses/LICENSE.txt": "66408b049249c3bdb0ba1ed285f5422ce67e371d40151bebd4d806af454ffe7c"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }

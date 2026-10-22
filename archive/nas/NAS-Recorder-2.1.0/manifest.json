@@ -21,9 +21,12 @@
     "note_zh": "支持光照记录和通知，早于完整设备控制页。"
   },
   "files": {
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "ad9c2db8fd310ec29c00910aa4489fc42d293f81aefaddf0a8b7dccb6004859b",
-    "README.zh-CN.md": "e6f30b1704e89b3d43a150566366ef432ea741348f98083d4a1e538bfcaba7b4",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "8f6b195eb11ef927fa30f869af7d0ce9bb19ce88321a1f37ee76cdef933a9221",
+    "README.zh-CN.md": "5dbe1a9bd72772cd2f22459397c4f8db4666180338cc92605e793d1dea64296a",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "mqtt/config/acl.archive.example": "4dfbd7853fbe27a63a4e89e7fb27c7b2a7330b8ed439f97ad01696cc10c9ffe7",
     "recorder/.dockerignore": "148e9182701d85e79b2f232af77c30f4ba39837fdf28fffaef7a59932d1ceb41",
     "recorder/.env.example": "f5f547b4f8cffeb618dd7df4b636ea6ed55aa4c841877166904ed2a4722ae838",
@@ -58,5 +61,8 @@
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/RECORD": "f6d313f5d09b601880756182ba4e9e2b8707a52c6cac7ef15dedad4daca7ce70",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/WHEEL": "cc431c46bf4aaf4df1d68cc6c20e6ff4d4012a7de49dda7a2d2a1295583e8e15",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/licenses/LICENSE.txt": "66408b049249c3bdb0ba1ed285f5422ce67e371d40151bebd4d806af454ffe7c"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }

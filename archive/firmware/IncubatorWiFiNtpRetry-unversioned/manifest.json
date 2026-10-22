@@ -40,9 +40,15 @@
     "IncubatorWiFiNtpRetry/network_service.cpp": "0f4cdc5a8fc56f9bb3b3ae0df77ad6708914e0fdc48d8c40d5cf4ea3c2f10565",
     "IncubatorWiFiNtpRetry/network_service.h": "e8ccbcd62ba63a667326286b9e81b573f5910ec2a4bef811a8da3295d72478b9",
     "IncubatorWiFiNtpRetry/web_ui.h": "fc1fb0f83fb775e9f4bc70174da4e831f4a821b4db60b91271ee441d94ffa4c2",
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "a1cd8d0f4085c5497c347a055bfe65e7c23e611b51b21b9ec3e65cebdc1ad536",
-    "README.zh-CN.md": "0b946f737fb07fc8e921343cbff7a200612b33b8ea583f7bdd22c730061ba9c5",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "413ab75922ca3210b2ab4ada8910d240a73bbc396d3448c026362bf9e636c77a",
+    "README.zh-CN.md": "0e9861b51c18235cd284d2976c844df3980e18cc83bd13a7884ad3e155a75dc8",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }

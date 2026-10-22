@@ -6,6 +6,12 @@ Versioned source packages and their independent installation guides are listed b
 
 See [all downloads](archive/README.md) / [全部下载](archive/README.zh-CN.md).
 
+## Licensing / 许可证
+
+2026-10-23: project-original source, documentation, diagrams and archived original revisions are licensed under Apache-2.0. Historical source packages include the license and attribution files; their manifests and download checksums have been refreshed. Program sources are unchanged. Third-party licenses are preserved.
+
+2026-10-23：项目原创源码、文档、图示及历史原创修订采用Apache-2.0。历史源码包补齐许可与署名文件，并更新清单及下载校验值；程序源码保持原样，第三方许可保留。
+
 ## Current validation / 当前验证
 
 **2026-10-22 — Connected-2.2.4 + NAS-Recorder-2.2.3a:** complete firmware build and source/backend CI passed. The maintainer reported over ten minutes of stable hardware operation after flashing, with no issue observed. Marked as initial hardware validation; extended uptime, outage recovery and replay validation remain pending.

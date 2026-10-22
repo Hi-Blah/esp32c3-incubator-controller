@@ -1,8 +1,9 @@
-# License status / 许可证状态
+# License scope / 许可证适用范围
 
-A project-wide license has not yet been assigned to the project source and documentation. No MIT, Apache or other project-wide grant is implied. Until a license is selected, applicable copyright rules apply. Public visibility alone does not grant general permission to copy, modify or redistribute.
+Project-original source code, build/configuration templates, documentation and wiring diagrams are licensed under the **Apache License, Version 2.0**. This grant includes the original project portions of historical revisions and archived source packages. See [LICENSE](LICENSE) for the full terms and [NOTICE](NOTICE) for project attribution.
 
-项目源码及文档暂未指定项目级许可证。当前没有默认授予 MIT、Apache 等许可；公开可见不等于可以任意复制、修改或再分发。
+Third-party software, fonts and other assets retain their own copyrights and licenses, including files under `third_party/`, recorder `vendor/` directories and dependency archives. The project license does not relicense them. Keep their original notices and comply with their distribution requirements; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-Third-party code retains its own licenses. Read [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+项目原创源码、构建/配置模板、说明文档和接线图采用 **Apache License 2.0**，授权范围包括历史修订及归档源码包中的项目原创部分。完整条款见 [LICENSE](LICENSE)，项目署名见 [NOTICE](NOTICE)。
 
+第三方软件、字体及其他资产继续保留原版权和许可证，包括 `third_party/`、记录器 `vendor/` 目录及依赖包。本项目许可证不替换这些许可；分发时保留原声明，并遵守各依赖的分发要求，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

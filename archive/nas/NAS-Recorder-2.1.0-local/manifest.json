@@ -21,9 +21,12 @@
     "note_zh": "历史版本，使用前需核对兼容性。"
   },
   "files": {
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "12ad35445cdf75a16025ef7c6539cdfdd3ed100a58ac32e0146c91689b115326",
-    "README.zh-CN.md": "0a60c14b6d931fddf74c45a31cdad703da93573258444bb90fb9667133354ec5",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "8d29f072036d2ec93e37bf2ee1bb3e31715896406f0d81fcf6dd9e848c935325",
+    "README.zh-CN.md": "936aba73df64242ce14da0ea5d0ac9c1b82aa0c0c7585a1134bc6c9f07a9f40f",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "mqtt/config/acl.archive.example": "4dfbd7853fbe27a63a4e89e7fb27c7b2a7330b8ed439f97ad01696cc10c9ffe7",
     "recorder/.env.example": "f5f547b4f8cffeb618dd7df4b636ea6ed55aa4c841877166904ed2a4722ae838",
     "recorder/check_runtime.py": "0fa9c73e809748628a773e6f34a147f19f645c6dfba63b7ab07ed1cb30e38fe9",
@@ -51,5 +54,8 @@
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/RECORD": "f6d313f5d09b601880756182ba4e9e2b8707a52c6cac7ef15dedad4daca7ce70",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/WHEEL": "cc431c46bf4aaf4df1d68cc6c20e6ff4d4012a7de49dda7a2d2a1295583e8e15",
     "recorder/vendor/paho_mqtt-2.1.0.dist-info/licenses/LICENSE.txt": "66408b049249c3bdb0ba1ed285f5422ce67e371d40151bebd4d806af454ffe7c"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }

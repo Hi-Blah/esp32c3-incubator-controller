@@ -6,7 +6,7 @@
     "firmware": "Connected-2.2.3",
     "nas": "NAS-Recorder-2.2.2c"
   },
-  "license": "not selected",
+  "license": "Apache-2.0",
   "validation": {
     "reported_on": "2026-10-22",
     "source": "maintainer-reported hardware observation",

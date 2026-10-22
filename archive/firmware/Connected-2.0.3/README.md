@@ -47,4 +47,4 @@ Suggested companion: MQTT broker / HA only. MQTT-enabled releases require an exp
 
 ## Validation and license
 
-Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: MQTT coexistence and persistent queue problems remained. Project license is not assigned; third-party licenses retain their terms. 
+Check boot/version, sensor validity, each output independently, PWM, reconnect and the recovery functions present in this version. Known issue: MQTT coexistence and persistent queue problems remained. Project-original code is licensed under Apache-2.0; third-party licenses retain their terms. 

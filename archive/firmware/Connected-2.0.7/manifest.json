@@ -57,9 +57,15 @@
     "IncubatorConnected/web_state_json.h": "30e386556d0a738b5e72f02c7e59d76e47719e987729bca4a55a76f4b49c4050",
     "IncubatorConnected/web_state_tests.cpp": "9b81613290595d9d831ea351ab7a3a15b2dabc04c127f51d642c3856ab746453",
     "IncubatorConnected/web_ui.h": "1f87765e12f5636ba0b4b3b38dccc908e5e3ee1d7178aedadb44a94d732f6736",
-    "LICENSE-STATUS.md": "59c9547a315620f67dcf5471405d3f24de05a89f923bc3189e726d61f972a546",
-    "README.md": "aba1c6925332f6e38a45841713155d0617d6db6739e126c19f3fd5dba812ac4d",
-    "README.zh-CN.md": "c078a31d71d3e6910e8adf062beb39f73266420eb83366bda8fda0c801c5d0fc",
+    "LICENSE": "1352de53fbef2f779adefaafb5568854c9532d1475955d1331f9f5427f9db713",
+    "LICENSE-STATUS.md": "ab2b6e615d7affc082ac72174074323827ac86e3a23f40f9c697eb81a1beea97",
+    "NOTICE": "e370c9eb613adba6bd4f27567c5a62faf8180eb83356d27cd1880e73eb1c6155",
+    "README.md": "7af077a049da8b2c6f27fc862fb64f14cba2b92322a9bdebb37b1f1ea2794edd",
+    "README.zh-CN.md": "916ef4aa9dd0af0d2a76bd1e88ccf7548a26dfd2fe611aee2877fcd63ec4b1d1",
+    "THIRD_PARTY_NOTICES.md": "91e2982617fe58585419f620403e76ff3b29d6d8d5dbeaf1f39aa87c13e1e225",
     "assets/wiring-power.svg": "02e1e986f47baface29a0405f5bfaceaf6f839b2dc5d581b8dc9e9d467399dc0"
-  }
+  },
+  "project_license": "Apache-2.0",
+  "license_updated_on": "2026-10-23",
+  "license_scope": "Project-original files only; third-party licenses preserved."
 }
